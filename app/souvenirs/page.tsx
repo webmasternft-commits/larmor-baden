@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  ShoppingBag, ExternalLink, Package, Palette,
+  ShoppingBag, Package, Palette,
   Heart, Truck, Shield, Star, Shirt,
 } from "lucide-react";
 import { getAllProductsWithDetails, type PrintfulProductDetail } from "@/lib/printful";
 
-const SOUVENIRS_URL = process.env.NEXT_PUBLIC_SOUVENIRS_URL ?? "https://souvenirs.larmor-baden.com";
-
-export const revalidate = 300; // ISR – revalidate toutes les 5 minutes
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Souvenirs Larmor-Baden : T-shirts, Mugs, Posters & Cadeaux | Golfe du Morbihan",
@@ -23,15 +22,13 @@ export const metadata: Metadata = {
   },
 };
 
-/* ──── Avantages ──── */
 const ADVANTAGES = [
-  { icon: Palette,  title: "Designs exclusifs",  desc: "Inspirés du Golfe" },
-  { icon: Truck,    title: "Livraison mondiale",  desc: "Expédition rapide" },
-  { icon: Shield,   title: "Qualité premium",     desc: "Impression soignée" },
-  { icon: Heart,    title: "Fait à la demande",   desc: "Zéro gaspillage" },
+  { icon: Palette, title: "Designs exclusifs", desc: "Inspirés du Golfe" },
+  { icon: Truck, title: "Livraison mondiale", desc: "Expédition rapide" },
+  { icon: Shield, title: "Qualité premium", desc: "Impression soignée" },
+  { icon: Heart, title: "Fait à la demande", desc: "Zéro gaspillage" },
 ];
 
-/* ──── Helpers ──── */
 function getPreviewImage(product: PrintfulProductDetail): string {
   const variant = product.sync_variants[0];
   if (variant) {
@@ -42,13 +39,11 @@ function getPreviewImage(product: PrintfulProductDetail): string {
 }
 
 function getPrice(product: PrintfulProductDetail): string | null {
-  const variant = product.sync_variants[0];
-  return variant?.retail_price ?? null;
+  return product.sync_variants[0]?.retail_price ?? null;
 }
 
 function getCurrency(product: PrintfulProductDetail): string {
-  const variant = product.sync_variants[0];
-  return variant?.currency ?? "EUR";
+  return product.sync_variants[0]?.currency ?? "EUR";
 }
 
 function formatPrice(price: string | null, currency: string): string {
@@ -61,7 +56,6 @@ function formatPrice(price: string | null, currency: string): string {
   }
 }
 
-/* ──── Composant principal ──── */
 export default async function SouvenirsPage() {
   let products: PrintfulProductDetail[] = [];
   let fetchError = false;
@@ -94,17 +88,9 @@ export default async function SouvenirsPage() {
             <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
               Souvenirs du<br />Golfe du Morbihan
             </h1>
-            <p className="text-lg text-sky-100 max-w-xl mx-auto mb-8">
+            <p className="text-lg text-sky-100 max-w-xl mx-auto">
               T-shirts, sweats, mugs, posters et accessoires — des designs exclusifs inspirés de Larmor-Baden, Gavrinis, l&apos;Île Berder et la Bretagne.
             </p>
-            <a href={SOUVENIRS_URL} target="_blank" rel="noopener noreferrer">
-              <Button
-                size="lg"
-                className="bg-white text-sky-800 hover:bg-sky-50 rounded-xl text-base px-8 font-semibold shadow-lg"
-              >
-                Visiter la boutique <ExternalLink className="h-4 w-4 ml-2" />
-              </Button>
-            </a>
           </div>
         </div>
       </section>
@@ -128,14 +114,12 @@ export default async function SouvenirsPage() {
         </div>
       </section>
 
-      {/* ──── Produits Printful ──── */}
+      {/* ──── Produits ──── */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex items-center gap-3 mb-8">
             <Package className="h-6 w-6 text-sky-600" />
-            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">
-              Nos produits
-            </h2>
+            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">Nos produits</h2>
             {products.length > 0 && (
               <span className="text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">
                 {products.length} article{products.length > 1 ? "s" : ""}
@@ -146,34 +130,16 @@ export default async function SouvenirsPage() {
           {fetchError && (
             <div className="text-center py-16">
               <ShoppingBag className="h-12 w-12 text-stone-300 mx-auto mb-4" />
-              <p className="text-stone-500 mb-2">
-                La boutique est en cours de préparation.
-              </p>
-              <p className="text-sm text-stone-400 mb-6">
-                Les produits seront bientôt disponibles. En attendant, visitez notre boutique en ligne.
-              </p>
-              <a href={SOUVENIRS_URL} target="_blank" rel="noopener noreferrer">
-                <Button className="bg-sky-600 hover:bg-sky-700 text-white rounded-xl">
-                  Voir la boutique <ExternalLink className="h-4 w-4 ml-2" />
-                </Button>
-              </a>
+              <p className="text-stone-500 mb-2">La boutique est en cours de préparation.</p>
+              <p className="text-sm text-stone-400">Les produits seront bientôt disponibles.</p>
             </div>
           )}
 
           {!fetchError && products.length === 0 && (
             <div className="text-center py-16">
               <Shirt className="h-12 w-12 text-stone-300 mx-auto mb-4" />
-              <p className="text-stone-500 mb-2">
-                La collection arrive bientôt !
-              </p>
-              <p className="text-sm text-stone-400 mb-6">
-                Nos designs exclusifs Larmor-Baden sont en cours de création. Restez connectés.
-              </p>
-              <a href={SOUVENIRS_URL} target="_blank" rel="noopener noreferrer">
-                <Button className="bg-sky-600 hover:bg-sky-700 text-white rounded-xl">
-                  Voir la boutique <ExternalLink className="h-4 w-4 ml-2" />
-                </Button>
-              </a>
+              <p className="text-stone-500 mb-2">La collection arrive bientôt !</p>
+              <p className="text-sm text-stone-400">Nos designs exclusifs Larmor-Baden sont en cours de création.</p>
             </div>
           )}
 
@@ -184,14 +150,11 @@ export default async function SouvenirsPage() {
                 const price = getPrice(product);
                 const currency = getCurrency(product);
                 const variantCount = product.sync_variants.length;
+                const pid = product.sync_product.id;
 
                 return (
-                  <Card
-                    key={product.sync_product.id}
-                    className="overflow-hidden border-stone-200/60 hover:shadow-[var(--shadow-lg)] transition-all duration-300 hover:-translate-y-1 group bg-white"
-                  >
-                    {/* Image */}
-                    <a href={SOUVENIRS_URL} target="_blank" rel="noopener noreferrer">
+                  <Link key={pid} href={`/souvenirs/${pid}`} className="group">
+                    <Card className="overflow-hidden border-stone-200/60 hover:shadow-[var(--shadow-lg)] transition-all duration-300 hover:-translate-y-1 bg-white h-full">
                       <div className="relative h-64 overflow-hidden bg-stone-50 flex items-center justify-center p-4">
                         <Image
                           src={imageUrl}
@@ -201,59 +164,29 @@ export default async function SouvenirsPage() {
                           sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
                         />
                       </div>
-                    </a>
-
-                    <CardContent className="p-5">
-                      {/* Nom */}
-                      <a href={SOUVENIRS_URL} target="_blank" rel="noopener noreferrer">
-                        <h3 className="font-semibold text-stone-900 mb-2 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2 hover:underline underline-offset-2">
+                      <CardContent className="p-5">
+                        <h3 className="font-semibold text-stone-900 mb-2 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
                           {product.sync_product.name}
                         </h3>
-                      </a>
-
-                      {/* Prix + variantes */}
-                      <div className="flex items-center justify-between mb-4">
-                        {price && (
-                          <span className="text-lg font-bold text-sky-700">
-                            {formatPrice(price, currency)}
-                          </span>
-                        )}
-                        {variantCount > 1 && (
-                          <span className="text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">
-                            {variantCount} variante{variantCount > 1 ? "s" : ""}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* CTA */}
-                      <a
-                        href={SOUVENIRS_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-sky-600 text-white rounded-xl text-sm font-semibold hover:bg-sky-700 transition-colors"
-                      >
-                        Voir le produit <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    </CardContent>
-                  </Card>
+                        <div className="flex items-center justify-between">
+                          {price && (
+                            <span className="text-lg font-bold text-sky-700">
+                              {formatPrice(price, currency)}
+                            </span>
+                          )}
+                          {variantCount > 1 && (
+                            <span className="text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">
+                              {variantCount} variante{variantCount > 1 ? "s" : ""}
+                            </span>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 );
               })}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* ──── CTA central ──── */}
-      <section className="py-8 px-4">
-        <div className="container mx-auto text-center">
-          <a href={SOUVENIRS_URL} target="_blank" rel="noopener noreferrer">
-            <Button
-              size="lg"
-              className="bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-base px-10 font-semibold"
-            >
-              Voir tous les souvenirs <ExternalLink className="h-4 w-4 ml-2" />
-            </Button>
-          </a>
         </div>
       </section>
 
@@ -265,9 +198,7 @@ export default async function SouvenirsPage() {
             Impression à la demande, qualité garantie
           </h2>
           <p className="text-stone-500 max-w-2xl mx-auto mb-8 leading-relaxed">
-            Chaque produit est imprimé à la commande grâce à Printful, notre partenaire d&apos;impression.
-            Cela signifie zéro gaspillage, des couleurs éclatantes et une qualité de fabrication irréprochable.
-            Livraison partout dans le monde.
+            Chaque produit est imprimé à la commande. Zéro gaspillage, couleurs éclatantes et qualité irréprochable. Livraison partout dans le monde.
           </p>
           <div className="grid sm:grid-cols-3 gap-6">
             <div className="p-6 rounded-2xl bg-sky-50/50 border border-sky-100">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Search } from "lucide-react";
+import CartButton from "@/components/cart/CartButton";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,6 +84,8 @@ export default function Header() {
             >
               <Search className="h-[18px] w-[18px]" />
             </Link>
+
+            <CartButton />
           </nav>
 
           {/* Mobile controls */}
@@ -94,6 +97,7 @@ export default function Header() {
             >
               <Search className="h-5 w-5" />
             </Link>
+            <CartButton />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-stone-700 hover:bg-stone-100 transition-colors"

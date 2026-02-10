@@ -6,13 +6,13 @@
 const PRINTFUL_API = "https://api.printful.com";
 const API_TOKEN = process.env.PRINTFUL_API_TOKEN ?? "";
 
-interface PrintfulFile {
+export interface PrintfulFile {
   type: string;
   preview_url: string;
   thumbnail_url: string;
 }
 
-interface PrintfulSyncVariant {
+export interface PrintfulSyncVariant {
   id: number;
   external_id: string;
   sync_product_id: number;
