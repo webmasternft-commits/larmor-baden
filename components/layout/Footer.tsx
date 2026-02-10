@@ -159,6 +159,7 @@ export default function Footer() {
                 { href: "/carte", label: "Carte interactive" },
                 { href: "/annuaire", label: "Annuaire pro" },
                 { href: "/boutique", label: "Boutique" },
+                { href: "/souvenirs", label: "Souvenirs" },
                 { href: "/blog", label: "Blog" },
               ].map((link) => (
                 <li key={link.href}>

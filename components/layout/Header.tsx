@@ -26,6 +26,7 @@ export default function Header() {
     { name: "Carte", href: "/carte" },
     { name: "Annuaire", href: "/annuaire" },
     { name: "Boutique", href: "/boutique" },
+    { name: "Souvenirs", href: "/souvenirs" },
     { name: "Blog", href: "/blog" },
     { name: "Planifier", href: "/planifier" },
   ];

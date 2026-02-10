@@ -27,6 +27,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images-eu.ssl-images-amazon.com",
       },
+      {
+        protocol: "https",
+        hostname: "files.cdn.printful.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.dtg.printful.com",
+      },
     ],
   },
 };
