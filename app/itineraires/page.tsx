@@ -7,8 +7,13 @@ import { mockItineraries } from "@/lib/mock-data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Itinéraires - Larmor-Baden",
-  description: "Itinéraires personnalisés pour explorer le Golfe du Morbihan : week-end, semaine en famille, escapade romantique.",
+  title: "Itinéraires Larmor-Baden : Week-end, Famille, Romantique | Golfe du Morbihan",
+  description: "Itinéraires prêts à l'emploi pour visiter Larmor-Baden et le Golfe du Morbihan : week-end 2 jours, semaine en famille, escapade romantique. Gavrinis, Île Berder, Île aux Moines, restaurants, plages.",
+  alternates: { canonical: "https://larmor-baden.com/itineraires" },
+  openGraph: {
+    title: "Itinéraires Larmor-Baden : Week-end, Famille, Romantique",
+    description: "Plans de voyage prêts à l'emploi pour le Golfe du Morbihan.",
+  },
 };
 
 const BUDGET_LABELS: Record<string, string> = { economique: "Éco", moyen: "Moyen", eleve: "Premium" };

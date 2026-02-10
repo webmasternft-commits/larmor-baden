@@ -5,8 +5,13 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export const metadata: Metadata = {
-  title: "Blog - Larmor-Baden",
-  description: "Articles, conseils et bons plans pour découvrir Larmor-Baden et le Golfe du Morbihan.",
+  title: "Blog Larmor-Baden : Guides, Conseils & Bons Plans Golfe du Morbihan",
+  description: "Articles et guides pratiques pour découvrir Larmor-Baden : restaurants, randonnées GR34, Cairn de Gavrinis, Île Berder, plages, météo, horaires des marées, hébergements dans le Golfe du Morbihan.",
+  alternates: { canonical: "https://larmor-baden.com/blog" },
+  openGraph: {
+    title: "Blog Larmor-Baden : Guides, Conseils & Bons Plans",
+    description: "Tous nos articles pour préparer votre séjour à Larmor-Baden et dans le Golfe du Morbihan.",
+  },
 };
 
 const blogPosts = [
@@ -47,8 +52,26 @@ export default function BlogPage() {
   const featured = blogPosts[0];
   const rest = blogPosts.slice(1);
 
+  const blogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Blog Larmor-Baden",
+    description: "Articles et guides pratiques pour visiter Larmor-Baden et le Golfe du Morbihan.",
+    url: "https://larmor-baden.com/blog",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: blogPosts.map((post, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `https://larmor-baden.com/blog/${post.slug}`,
+        name: post.title,
+      })),
+    },
+  };
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd) }} />
       {/* Hero */}
       <section className="bg-[var(--ocean)] text-white wave-divider">
         <div className="container mx-auto px-4 lg:px-6 py-16 md:py-20">

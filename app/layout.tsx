@@ -13,7 +13,7 @@ const inter = Inter({
 
 const SITE_URL = "https://larmor-baden.com";
 const SITE_NAME = "Larmor-Baden.com";
-const SITE_TITLE = "Larmor-Baden : Guide Touristique du Golfe du Morbihan | Bretagne";
+const SITE_TITLE = "Larmor-Baden : Guide Touristique du Golfe du Morbihan | Que faire, Restaurants, Plages, Hôtels";
 const SITE_DESCRIPTION =
   "Guide complet de Larmor-Baden (56870, Morbihan) et du Golfe du Morbihan en Bretagne : Cairn de Gavrinis (bateau, horaires), Île Berder accessible à marée basse, Île aux Moines, sentier côtier GR34, randonnées, plages, carte interactive, horaires des marées, restaurants, crêperies, hôtels, campings, gîtes, port et mouillage, ostréiculteurs, marchés, Semaine du Golfe. Que faire à Larmor-Baden ? Tout pour visiter et préparer votre séjour.";
 
@@ -180,7 +180,17 @@ const jsonLdOrganization = {
     geoMidpoint: { "@type": "GeoCoordinates", latitude: 47.5835, longitude: -2.8957 },
     geoRadius: "15000",
   },
-  sameAs: [],
+  sameAs: [
+    "https://www.secretsmaree.com",
+    "https://boutique.secretsmaree.com",
+    "https://maree.secretsmaree.com",
+  ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: "contact@larmor-baden.com",
+    contactType: "customer service",
+    availableLanguage: ["French"],
+  },
 };
 
 const jsonLdTouristDestination = {
@@ -257,6 +267,17 @@ export default function RootLayout({
     <html lang="fr" className={inter.variable}>
       <head>
         <link rel="manifest" href="/manifest.json" />
+        {/* Google Search Console */}
+        <meta name="google-site-verification" content="GOOGLE_VERIFICATION_CODE" />
+        {/* Bing Webmaster Tools */}
+        <meta name="msvalidate.01" content="BING_VERIFICATION_CODE" />
+        {/* Yandex (optionnel) */}
+        <meta name="yandex-verification" content="YANDEX_VERIFICATION_CODE" />
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://upload.wikimedia.org" />
+        <link rel="preconnect" href="https://www.secretsmaree.com" />
+        <link rel="preconnect" href="https://boutique.secretsmaree.com" />
+        <link rel="dns-prefetch" href="https://api.open-meteo.com" />
       </head>
       <body className={inter.className}>
         {/* JSON-LD global */}

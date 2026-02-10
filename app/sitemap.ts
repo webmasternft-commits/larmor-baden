@@ -13,10 +13,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/randonnees`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${SITE_URL}/carte`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/annuaire`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_URL}/boutique`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/itineraires`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/planifier`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${SITE_URL}/recherche`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${SITE_URL}/mentions-legales`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${SITE_URL}/confidentialite`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${SITE_URL}/cgv`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
@@ -46,6 +46,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  /* ── Annuaire professionnel ── */
+  const annuairePages: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/annuaire/les-secrets-de-la-maree`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+  ];
+
   /* ── Articles de blog ── */
   const blogSlugs = [
     /* Nouveaux articles SEO */
@@ -74,5 +84,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...poiPages, ...hikePages, ...itineraryPages, ...blogPages];
+  return [...staticPages, ...poiPages, ...hikePages, ...itineraryPages, ...annuairePages, ...blogPages];
 }
