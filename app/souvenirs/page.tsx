@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   ShoppingBag, Package, Palette,
   Heart, Truck, Shield, Star, Shirt,
@@ -14,14 +13,15 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Souvenirs Larmor-Baden : T-shirts, Mugs, Posters & Cadeaux | Golfe du Morbihan",
   description:
-    "Boutique de souvenirs Larmor-Baden — T-shirts, sweats, mugs, posters, tote bags inspirés du Golfe du Morbihan et de la Bretagne. Impression à la demande, qualité premium.",
+    "Boutique de souvenirs Larmor-Baden — T-shirts, sweats, mugs, bobs, tote bags inspirés du Golfe du Morbihan et de la Bretagne. Impression à la demande, qualité premium.",
   alternates: { canonical: "https://larmor-baden.com/souvenirs" },
   openGraph: {
     title: "Souvenirs — Larmor-Baden & Golfe du Morbihan",
-    description: "T-shirts, mugs, posters et cadeaux uniques inspirés de Larmor-Baden.",
+    description: "T-shirts, mugs, bobs et cadeaux uniques inspirés de Larmor-Baden.",
   },
 };
 
+/* ──── Avantages ──── */
 const ADVANTAGES = [
   { icon: Palette, title: "Designs exclusifs", desc: "Inspirés du Golfe" },
   { icon: Truck, title: "Livraison mondiale", desc: "Expédition rapide" },
@@ -29,6 +29,7 @@ const ADVANTAGES = [
   { icon: Heart, title: "Fait à la demande", desc: "Zéro gaspillage" },
 ];
 
+/* ──── Helpers ──── */
 function getPreviewImage(product: PrintfulProductDetail): string {
   const variant = product.sync_variants[0];
   if (variant) {
@@ -46,16 +47,39 @@ function getCurrency(product: PrintfulProductDetail): string {
   return product.sync_variants[0]?.currency ?? "EUR";
 }
 
-function formatPrice(price: string | null, currency: string): string {
+function fmt(price: string | null, currency: string): string {
   if (!price) return "";
-  const num = parseFloat(price);
+  const n = parseFloat(price);
   try {
-    return new Intl.NumberFormat("fr-FR", { style: "currency", currency }).format(num);
+    return new Intl.NumberFormat("fr-FR", { style: "currency", currency }).format(n);
   } catch {
-    return `${num.toFixed(2)} ${currency}`;
+    return `${n.toFixed(2)} ${currency}`;
   }
 }
 
+/* ──── French names & short descriptions ──── */
+function getFrenchInfo(name: string): { frName: string; shortDesc: string; badge?: string } {
+  const lower = name.toLowerCase();
+  if (lower.includes("tee") || lower.includes("t-shirt"))
+    return { frName: "T-shirt Classique Unisexe", shortDesc: "Coton doux, coupe confortable", badge: "Best-seller" };
+  if (lower.includes("sweatshirt") || lower.includes("sweat"))
+    return { frName: "Sweatshirt Éco Unisexe", shortDesc: "Coton bio & polyester recyclé", badge: "Éco" };
+  if (lower.includes("bucket") || lower.includes("hat"))
+    return { frName: "Bob Réversible", shortDesc: "Deux looks en un seul accessoire", badge: "Nouveau" };
+  if (lower.includes("tote") || lower.includes("bag"))
+    return { frName: "Tote Bag Éco", shortDesc: "Coton 100% biologique", badge: "Éco" };
+  if (lower.includes("mug"))
+    return { frName: "Mug Émaillé", shortDesc: "Acier émaillé, 350 ml", badge: "" };
+  return { frName: name, shortDesc: "Design exclusif Larmor-Baden" };
+}
+
+const BADGE_COLORS: Record<string, string> = {
+  "Best-seller": "bg-red-500",
+  Nouveau: "bg-sky-600",
+  "Éco": "bg-emerald-600",
+};
+
+/* ──── Page ──── */
 export default async function SouvenirsPage() {
   let products: PrintfulProductDetail[] = [];
   let fetchError = false;
@@ -89,7 +113,7 @@ export default async function SouvenirsPage() {
               Souvenirs du<br />Golfe du Morbihan
             </h1>
             <p className="text-lg text-sky-100 max-w-xl mx-auto">
-              T-shirts, sweats, mugs, posters et accessoires — des designs exclusifs inspirés de Larmor-Baden, Gavrinis, l&apos;Île Berder et la Bretagne.
+              T-shirts, sweats, bobs, mugs et tote bags — des designs exclusifs brodés, inspirés de Larmor-Baden, Gavrinis et l&apos;Île Berder.
             </p>
           </div>
         </div>
@@ -119,7 +143,7 @@ export default async function SouvenirsPage() {
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex items-center gap-3 mb-8">
             <Package className="h-6 w-6 text-sky-600" />
-            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">Nos produits</h2>
+            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">Notre collection</h2>
             {products.length > 0 && (
               <span className="text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">
                 {products.length} article{products.length > 1 ? "s" : ""}
@@ -144,39 +168,46 @@ export default async function SouvenirsPage() {
           )}
 
           {products.length > 0 && (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {products.map((product) => {
                 const imageUrl = getPreviewImage(product);
                 const price = getPrice(product);
                 const currency = getCurrency(product);
                 const variantCount = product.sync_variants.length;
                 const pid = product.sync_product.id;
+                const { frName, shortDesc, badge } = getFrenchInfo(product.sync_product.name);
 
                 return (
                   <Link key={pid} href={`/souvenirs/${pid}`} className="group">
                     <Card className="overflow-hidden border-stone-200/60 hover:shadow-[var(--shadow-lg)] transition-all duration-300 hover:-translate-y-1 bg-white h-full">
-                      <div className="relative h-64 overflow-hidden bg-stone-50 flex items-center justify-center p-4">
+                      <div className="relative h-72 overflow-hidden bg-stone-50 flex items-center justify-center">
                         <Image
                           src={imageUrl}
-                          alt={`${product.sync_product.name} — souvenir Larmor-Baden, Golfe du Morbihan`}
+                          alt={`${frName} — souvenir Larmor-Baden, Golfe du Morbihan`}
                           fill
-                          className="object-contain group-hover:scale-105 transition-transform duration-500 p-4"
+                          className="object-contain group-hover:scale-105 transition-transform duration-500 p-6"
                           sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
                         />
+                        {badge && (
+                          <span className={`absolute top-3 left-3 px-2.5 py-1 ${BADGE_COLORS[badge] ?? "bg-sky-600"} text-white rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm`}>
+                            {badge}
+                          </span>
+                        )}
                       </div>
                       <CardContent className="p-5">
-                        <h3 className="font-semibold text-stone-900 mb-2 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
-                          {product.sync_product.name}
+                        <h3 className="font-semibold text-stone-900 mb-1 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
+                          {frName}
                         </h3>
+                        <p className="text-xs text-stone-400 mb-3">{shortDesc}</p>
                         <div className="flex items-center justify-between">
                           {price && (
                             <span className="text-lg font-bold text-sky-700">
-                              {formatPrice(price, currency)}
+                              {fmt(price, currency)}
                             </span>
                           )}
                           {variantCount > 1 && (
                             <span className="text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">
-                              {variantCount} variante{variantCount > 1 ? "s" : ""}
+                              {variantCount} taille{variantCount > 1 ? "s" : ""}
                             </span>
                           )}
                         </div>
