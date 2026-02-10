@@ -94,7 +94,7 @@ const PRODUCTS = [
     badge: "Innovation",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/assiette-hu%C3%AEtres-r%C3%A9frig%C3%A9rante.html",
     amazonUrl: "https://www.amazon.fr/Glace8-r%C3%A9frig%C3%A9rante-G%C3%A9n%C3%A9ration-Innovation-fran%C3%A7aise/dp/B09LR4QQGF?tag=zaffaires0c-21",
-    imageUrl: "https://boutique.secretsmaree.com/images/products/Assiette%20%C3%A0%20hu%C3%AEtres%20r%C3%A9frig%C3%A9rante%20en%20Poche%20de%20Glace%20Nouvelle%20G%C3%A9n%C3%A9ration%20-%20Innovation%20fran%C3%A7aise%20-%20%C3%A0%20l'unit%C3%A9%20(1%20x%206%20hu%C3%AEtres%20+%20demi%20citron)/51C6R0lC5IL._AC_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Assiette%20%C3%A0%20hu%C3%AEtres%20r%C3%A9frig%C3%A9rante%20en%20Poche%20de%20Glace%20Nouvelle%20G%C3%A9n%C3%A9ration%20-%20Innovation%20fran%C3%A7aise%20-%20%C3%A0%20l%27unit%C3%A9%20%281%20x%206%20hu%C3%AEtres%20%2B%20demi%20citron%29/51C6R0lC5IL._AC_.jpg",
     amazonAsin: "B09LR4QQGF",
   },
   {
@@ -115,7 +115,7 @@ const PRODUCTS = [
     badge: "Premium",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/laguiole-set-fruits-de-mer-14-pieces.html",
     amazonUrl: "https://www.amazon.fr/Laguiole-Set-fruits-Noir-14pices/dp/B00HHNJKOU?tag=zaffaires0c-21",
-    imageUrl: "https://boutique.secretsmaree.com/images/products/LAGUIOLE%20Set%20Fruits%20de%20mer%20Noir%2014pices/41tV8h+wadL._AC_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/LAGUIOLE%20Set%20Fruits%20de%20mer%20Noir%2014pices/41tV8h%2BwadL._AC_.jpg",
     amazonAsin: "B00HHNJKOU",
   },
   {
