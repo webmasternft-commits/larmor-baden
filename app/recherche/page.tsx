@@ -69,7 +69,7 @@ function RechercheContent() {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Search header */}
-      <section className="bg-white border-b border-stone-200 sticky top-24 z-40">
+      <section className="bg-white border-b border-stone-200 sticky top-20 z-40">
         <div className="container mx-auto px-4 lg:px-6 py-4">
           <div className="max-w-2xl mx-auto">
             <div className="relative">

@@ -107,7 +107,7 @@ export default function AnnuairePage() {
       </section>
 
       {/* ──── Filtres par catégorie ──── */}
-      <section className="bg-white border-b border-stone-200 sticky top-24 z-30">
+      <section className="bg-white border-b border-stone-200 sticky top-20 z-30">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex gap-2 py-3 overflow-x-auto scrollbar-hidden">
             {CATEGORIES.map((cat) => {

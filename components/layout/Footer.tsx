@@ -128,9 +128,9 @@ export default function Footer() {
               <Image
                 src="/logo-larmor-baden.png"
                 alt="Larmor-Baden — Golfe du Morbihan"
-                width={460}
-                height={110}
-                className="h-[85px] w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+                width={320}
+                height={80}
+                className="h-[55px] w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
             <p className="text-sm text-stone-400 leading-relaxed mb-4">

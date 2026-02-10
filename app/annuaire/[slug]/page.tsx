@@ -380,7 +380,7 @@ export default async function ProfessionalDetail({ params }: { params: Promise<{
 
           {/* ── Sidebar ── */}
           <div className="lg:col-span-1">
-            <div className="sticky top-32 space-y-5">
+            <div className="sticky top-24 space-y-5">
 
               {/* Carte prix / CTA */}
               <Card className="border-stone-200/60 shadow-[var(--shadow-lg)] overflow-hidden">

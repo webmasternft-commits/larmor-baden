@@ -41,15 +41,15 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-4 lg:px-6">
-        <div className="flex h-24 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           {/* Brand */}
           <Link href="/" className="flex items-center group">
             <Image
               src="/logo-larmor-baden.png"
               alt="Larmor-Baden — Golfe du Morbihan"
-              width={500}
-              height={120}
-              className="h-[72px] md:h-[90px] w-auto object-contain group-hover:opacity-80 transition-opacity"
+              width={360}
+              height={90}
+              className="h-[50px] md:h-[60px] w-auto object-contain group-hover:opacity-80 transition-opacity"
               priority
             />
           </Link>
