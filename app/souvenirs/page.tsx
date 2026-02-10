@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   ShoppingBag, Package, Palette,
   Heart, Truck, Shield, Star, Shirt,
 } from "lucide-react";
 import { getAllProductsWithDetails, type PrintfulProductDetail } from "@/lib/printful";
+
+const SITE_URL = "https://larmor-baden.com";
 
 export const revalidate = 300;
 
@@ -91,8 +94,48 @@ export default async function SouvenirsPage() {
     fetchError = true;
   }
 
+  /* ── JSON-LD ItemList + BreadcrumbList ── */
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Souvenirs Larmor-Baden — Golfe du Morbihan",
+    description: "Collection de souvenirs exclusifs inspirés de Larmor-Baden et du Golfe du Morbihan.",
+    numberOfItems: products.length,
+    itemListElement: products.map((p, i) => {
+      const { frName } = getFrenchInfo(p.sync_product.name);
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${SITE_URL}/souvenirs/${p.sync_product.id}`,
+        name: frName,
+        image: getPreviewImage(p),
+      };
+    }),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Souvenirs", item: `${SITE_URL}/souvenirs` },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
+      <Script
+        id="ld-souvenirs-list"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <Script
+        id="ld-souvenirs-breadcrumb"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* ──── Hero ──── */}
       <section className="bg-gradient-to-br from-sky-600 via-sky-700 to-cyan-800 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">

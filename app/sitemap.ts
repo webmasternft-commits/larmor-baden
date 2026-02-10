@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { mockPois, mockHikes, mockItineraries } from "@/lib/mock-data";
+import { getStoreProducts } from "@/lib/printful";
 
 const SITE_URL = "https://larmor-baden.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   /* ── Pages statiques ── */
@@ -85,5 +86,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...poiPages, ...hikePages, ...itineraryPages, ...annuairePages, ...blogPages];
+  /* ── Produits Souvenirs (Printful) ── */
+  let souvenirPages: MetadataRoute.Sitemap = [];
+  try {
+    const products = await getStoreProducts();
+    souvenirPages = products.map((p) => ({
+      url: `${SITE_URL}/souvenirs/${p.id}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+  } catch {
+    // Printful API indisponible — on skip
+  }
+
+  return [...staticPages, ...poiPages, ...hikePages, ...itineraryPages, ...annuairePages, ...blogPages, ...souvenirPages];
 }

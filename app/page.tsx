@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Compass, Calendar, Search, Star, Quote, BookOpen, ArrowRight, Ship, Waves, Clock, Users, ExternalLink, ShoppingBag } from "lucide-react";
 import { mockPois, mockHikes, mockItineraries, mockStats } from "@/lib/mock-data";
+import { getAllProductsWithDetails, type PrintfulProductDetail } from "@/lib/printful";
 import WeatherWidget from "@/components/WeatherWidget";
 import type { Metadata } from "next";
 
@@ -22,10 +23,42 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export const revalidate = 300;
+
+/* ──── Helper: infos FR des produits Printful ──── */
+function getSouvenirInfo(name: string): { frName: string; shortDesc: string } {
+  const l = name.toLowerCase();
+  if (l.includes("tee") || l.includes("t-shirt")) return { frName: "T-shirt Classique", shortDesc: "Coton doux, coupe confortable" };
+  if (l.includes("sweatshirt") || l.includes("sweat")) return { frName: "Sweatshirt Éco", shortDesc: "Coton bio & polyester recyclé" };
+  if (l.includes("bucket") || l.includes("hat")) return { frName: "Bob Réversible", shortDesc: "Deux looks en un" };
+  if (l.includes("tote") || l.includes("bag")) return { frName: "Tote Bag Éco", shortDesc: "Coton 100% biologique" };
+  if (l.includes("mug")) return { frName: "Mug Émaillé", shortDesc: "Acier émaillé, 350 ml" };
+  return { frName: name, shortDesc: "Design exclusif" };
+}
+
+function getSouvenirImage(p: PrintfulProductDetail): string {
+  const prev = p.sync_variants[0]?.files?.find((f) => f.type === "preview");
+  return prev?.preview_url ?? p.sync_product.thumbnail_url;
+}
+
+function getSouvenirPrice(p: PrintfulProductDetail): string {
+  const v = p.sync_variants[0];
+  if (!v) return "";
+  return new Intl.NumberFormat("fr-FR", { style: "currency", currency: v.currency ?? "EUR" }).format(parseFloat(v.retail_price));
+}
+
+export default async function Home() {
   const pois = mockPois.slice(0, 6);
   const hikes = mockHikes.slice(0, 2);
   const stats = mockStats;
+
+  /* Fetch produits Printful pour la section Souvenirs */
+  let souvenirProducts: PrintfulProductDetail[] = [];
+  try {
+    souvenirProducts = await getAllProductsWithDetails();
+  } catch {
+    // Printful indisponible — section masquée
+  }
 
   /* ── FAQ structurée pour Google & IA — cible les requêtes réelles ── */
   const faqJsonLd = {
@@ -659,6 +692,70 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ──── Boutique Souvenirs ──── */}
+      {souvenirProducts.length > 0 && (
+        <section className="py-20 px-4 bg-gradient-to-b from-white via-amber-50/30 to-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <p className="text-sm font-medium text-amber-600 uppercase tracking-wider mb-2">Boutique</p>
+                <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 tracking-tight">
+                  Souvenirs de Larmor-Baden
+                </h2>
+                <p className="text-stone-500 mt-2 max-w-md text-sm">
+                  T-shirts, sweats, mugs et accessoires — designs exclusifs inspirés du Golfe du Morbihan
+                </p>
+              </div>
+              <Link href="/souvenirs" className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-amber-700 hover:text-amber-600 transition-colors group">
+                Voir la boutique <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+              {souvenirProducts.slice(0, 5).map((p) => {
+                const pid = p.sync_product.id;
+                const { frName, shortDesc } = getSouvenirInfo(p.sync_product.name);
+                const imageUrl = getSouvenirImage(p);
+                const price = getSouvenirPrice(p);
+
+                return (
+                  <Link key={pid} href={`/souvenirs/${pid}`} className="group">
+                    <Card className="overflow-hidden border-stone-200/60 hover:shadow-[var(--shadow-lg)] transition-all duration-300 hover:-translate-y-1 bg-white h-full">
+                      <div className="relative h-56 overflow-hidden bg-stone-50 flex items-center justify-center">
+                        <Image
+                          src={imageUrl}
+                          alt={`${frName} — souvenir Larmor-Baden, Golfe du Morbihan`}
+                          fill
+                          className="object-contain group-hover:scale-105 transition-transform duration-500 p-4"
+                          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 20vw"
+                        />
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-stone-900 text-sm group-hover:text-amber-700 transition-colors mb-0.5 line-clamp-1">
+                          {frName}
+                        </h3>
+                        <p className="text-xs text-stone-400 mb-2">{shortDesc}</p>
+                        {price && (
+                          <span className="text-base font-bold text-amber-700">{price}</span>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="text-center mt-8 sm:hidden">
+              <Link href="/souvenirs">
+                <Button variant="outline" className="group rounded-xl">
+                  Voir la boutique <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ──── Derniers articles du blog ──── */}
       <section className="py-20 px-4">
