@@ -280,6 +280,20 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api.open-meteo.com" />
       </head>
       <body className={inter.className}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-X42BL9QV50"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-X42BL9QV50');
+          `}
+        </Script>
+
         {/* JSON-LD global */}
         <Script
           id="ld-website"
