@@ -4,7 +4,7 @@
  */
 
 const PRINTFUL_API = "https://api.printful.com";
-const SECRET_KEY = process.env.PRINTFUL_SECRET_KEY ?? "";
+const API_TOKEN = process.env.PRINTFUL_API_TOKEN ?? "";
 
 interface PrintfulFile {
   type: string;
@@ -47,7 +47,7 @@ export interface PrintfulProductDetail {
 async function printfulFetch<T>(path: string): Promise<T> {
   const res = await fetch(`${PRINTFUL_API}${path}`, {
     headers: {
-      Authorization: `Bearer ${SECRET_KEY}`,
+      Authorization: `Bearer ${API_TOKEN}`,
     },
     next: { revalidate: 300 }, // Cache 5 min
   });
