@@ -35,7 +35,8 @@ export async function POST(req: NextRequest) {
         expand: ["line_items.data.price.product", "customer_details"],
       });
 
-      const shipping = fullSession.shipping_details ?? fullSession.customer_details;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const shipping = (fullSession as any).shipping_details ?? fullSession.customer_details;
       const cartJson = fullSession.metadata?.cart_json;
 
       if (!cartJson || !shipping?.address) {
