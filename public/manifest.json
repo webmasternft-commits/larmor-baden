@@ -1,0 +1,15 @@
+{
+  "name": "Larmor-Baden - Guide du Golfe du Morbihan",
+  "short_name": "Larmor-Baden",
+  "description": "Guide touristique de Larmor-Baden et du Golfe du Morbihan : Cairn de Gavrinis, Île Berder, randonnées GR34, carte interactive.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0c4a6e",
+  "lang": "fr",
+  "categories": ["travel", "tourism"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

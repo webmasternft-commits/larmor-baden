@@ -1,0 +1,269 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String      @id @default(cuid())
+  email         String      @unique
+  name          String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  favorites     Favorite[]
+  lists         UserList[]
+}
+
+model Poi {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  type          String
+  summary       String
+  content       String?     @db.Text
+  lat           Float
+  lng           Float
+  tags          String[]
+  season        String[]
+  kidFriendly   Boolean     @default(false)
+  durationMin   Int?
+  priceLevel    Int         @default(0)
+  published     Boolean     @default(true)
+  seoTitle      String?
+  seoDesc       String?
+  imageUrl      String?
+  address       String?
+  openingHours  String?
+  contact       String?
+  email         String?
+  website       String?
+  communeId     String?
+  commune       Commune?    @relation(fields: [communeId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  favorites     Favorite[]
+  listItems     ListItem[]
+  
+  @@index([slug])
+  @@index([type])
+  @@index([communeId])
+}
+
+model Hike {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  description   String      @db.Text
+  distanceKm    Float
+  durationMin   Int
+  difficulty    String
+  type          String
+  startPoint    String
+  highlights    String[]
+  equipment     String[]
+  bestSeason    String?
+  warnings      String[]
+  facilities    String[]
+  tags          String[]
+  kidFriendly   Boolean     @default(false)
+  published     Boolean     @default(true)
+  seoTitle      String?
+  seoDesc       String?
+  imageUrl      String?
+  gpxUrl        String?
+  elevationGain Int?
+  communeId     String?
+  commune       Commune?    @relation(fields: [communeId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  favorites     Favorite[]
+  listItems     ListItem[]
+  
+  @@index([slug])
+  @@index([difficulty])
+  @@index([communeId])
+}
+
+model Itinerary {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  description   String      @db.Text
+  days          Int
+  blocks        Json
+  tags          String[]
+  profile       String[]
+  budget        String
+  mobility      String[]
+  interests     String[]
+  published     Boolean     @default(true)
+  seoTitle      String?
+  seoDesc       String?
+  imageUrl      String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  favorites     Favorite[]
+  listItems     ListItem[]
+  
+  @@index([slug])
+  @@index([days])
+}
+
+model Commune {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  centerLat     Float
+  centerLng     Float
+  description   String?     @db.Text
+  population    Int?
+  postalCode    String?
+  seoTitle      String?
+  seoDesc       String?
+  imageUrl      String?
+  published     Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  pois          Poi[]
+  hikes         Hike[]
+  pros          Pro[]
+  
+  @@index([slug])
+}
+
+model Theme {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  description   String?     @db.Text
+  tags          String[]
+  seoTitle      String?
+  seoDesc       String?
+  imageUrl      String?
+  published     Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([slug])
+}
+
+model Pro {
+  id            String      @id @default(cuid())
+  name          String
+  slug          String      @unique
+  type          String
+  description   String?     @db.Text
+  address       String?
+  phone         String?
+  email         String?
+  website       String?
+  verified      Boolean     @default(false)
+  tags          String[]
+  imageUrl      String?
+  communeId     String?
+  commune       Commune?    @relation(fields: [communeId], references: [id])
+  published     Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([slug])
+  @@index([type])
+  @@index([communeId])
+}
+
+model Faq {
+  id            String      @id @default(cuid())
+  pageType      String
+  question      String
+  answer        String      @db.Text
+  order         Int         @default(0)
+  published     Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([pageType])
+  @@index([order])
+}
+
+model BlogPost {
+  id            String      @id @default(cuid())
+  title         String
+  slug          String      @unique
+  excerpt       String
+  content       String      @db.Text
+  imageUrl      String?
+  tags          String[]
+  published     Boolean     @default(false)
+  publishedAt   DateTime?
+  seoTitle      String?
+  seoDesc       String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([slug])
+  @@index([publishedAt])
+}
+
+model Favorite {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  itemType      String
+  poiId         String?
+  poi           Poi?        @relation(fields: [poiId], references: [id], onDelete: Cascade)
+  hikeId        String?
+  hike          Hike?       @relation(fields: [hikeId], references: [id], onDelete: Cascade)
+  itineraryId   String?
+  itinerary     Itinerary?  @relation(fields: [itineraryId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+  
+  @@unique([userId, itemType, poiId, hikeId, itineraryId])
+  @@index([userId])
+}
+
+model UserList {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  description   String?
+  isPublic      Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  items         ListItem[]
+  
+  @@index([userId])
+}
+
+model ListItem {
+  id            String      @id @default(cuid())
+  listId        String
+  list          UserList    @relation(fields: [listId], references: [id], onDelete: Cascade)
+  itemType      String
+  poiId         String?
+  poi           Poi?        @relation(fields: [poiId], references: [id], onDelete: Cascade)
+  hikeId        String?
+  hike          Hike?       @relation(fields: [hikeId], references: [id], onDelete: Cascade)
+  itineraryId   String?
+  itinerary     Itinerary?  @relation(fields: [itineraryId], references: [id], onDelete: Cascade)
+  notes         String?
+  order         Int         @default(0)
+  createdAt     DateTime    @default(now())
+  
+  @@index([listId])
+  @@index([order])
+}
+
+model Newsletter {
+  id            String      @id @default(cuid())
+  email         String      @unique
+  tags          String[]
+  subscribed    Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([email])
+}
