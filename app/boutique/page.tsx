@@ -34,7 +34,7 @@ const PRODUCTS = [
     badge: "Best-seller",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/couteau-arcos-hu%C3%AEtres.html",
     amazonUrl: "https://www.amazon.fr/ARCOS-Couteau-Hu%C3%AEtres-Acier-Inoxydable/dp/B017DLH9RA?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/31LJD-IXNML._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/ARCOS%20Couteau%20%C3%A0%20Hu%C3%AEtres%20en%20Acier%20Inoxydable%2060mm%20-%20Manche%20Ergonomique%20Polypropyl%C3%A8ne%20Noir%20-%20Pr%C3%A9cision%20et%20S%C3%A9curit%C3%A9%20pour%20Cuisine%20Professionnelle%20-%20Design%20%C3%89l%C3%A9gant%20et%20L%C3%A9ger/31qVRoCTy2L._AC_.jpg",
     amazonAsin: "B017DLH9RA",
   },
   {
@@ -44,7 +44,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/ouvre-hu%C3%AEtres-birambeau.html",
     amazonUrl: "https://www.amazon.fr/BIRAMBEAU-Ustensiles-Ouvre-Hu%C3%AEtres-Ergonomique-Ouverture/dp/B000SA8766?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/31mjwVKrmXL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/BIRAMBEAU%20-%20Ustensiles%20de%20Cuisine%20%E2%80%93%20Ouvre-Hu%C3%AEtres%20%E2%80%93%20Manche%20Ergonomique%20%E2%80%93%20Ouverture%20Tr%C3%A8s%20Facile%20-%20Inox%20%E2%80%93%20Bouton%20FermetureNoir/31s8WdXhYtL._AC_.jpg",
     amazonAsin: "B000SA8766",
   },
   {
@@ -54,7 +54,7 @@ const PRODUCTS = [
     badge: "Made in France",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/manique-cuir-hu%C3%AEtres.html",
     amazonUrl: "https://www.amazon.fr/Manique-cuir-hu%C3%AEtres-Id%C3%A9al-cadeau/dp/B0DNTT323R?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/71TwYvTa1CL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Manique%20en%20cuir%20v%C3%A9ritable%20pour%20ouvrir%20les%20hu%C3%AEtres%20%E2%80%93%20Gant%20%C3%A0%20hu%C3%AEtre%20artisanal%20fait%20main%20en%20France%20%E2%80%93%20Prot%C3%A8ge%20main%20cuir.%20Cadeau%20de%20No%C3%ABl/315Pt6wzoIL.jpg",
     amazonAsin: "B0DNTT323R",
   },
   {
@@ -64,7 +64,7 @@ const PRODUCTS = [
     badge: "Cadeau",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/coffret-set-hu%C3%AEtres-laguiole.html",
     amazonUrl: "https://www.amazon.fr/LAGUIOLE-HERITAGE-Accessoires-Presse-citron-palissandre/dp/B0DF5J1SR4?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/71q3Q+gqURL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Coffret%20complet%20Set%20%C3%A0%20hu%C3%AEtres%20-%204%20Accessoires%20-%20Couteau%20%C3%A0%20hu%C3%AEtres,%20Presse-citron,%20Bloc%20hu%C3%AEtres,%20Manique%20-%20Acier%20inoxydable,%20bois%20de%20palissandre%20-%20Coffret%20cadeau/31GP3PGXumL._AC_.jpg",
     amazonAsin: "B0DF5J1SR4",
   },
   {
@@ -74,7 +74,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/ensemble-couteaux-ouvre-hu%C3%AEtres.html",
     amazonUrl: "https://www.amazon.fr/Ensemble-Ouvre-hu%C3%AEtres-R%C3%A9sistant-appropri%C3%A9-inoxydable/dp/B0BLSWL89X?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/71fdnM1DjzL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Ensemble%20de%20couteaux%20%C3%A0%20hu%C3%AEtres%20Ensemble%20de%20couteaux%20%C3%A0%20hu%C3%AEtres%20Ouvre-hu%C3%AEtres%20R%C3%A9sistant%20aux%20coupures%20et%20gants%20pour%20moules%20ou%20fromage%20%C3%A0%20p%C3%A2te%20dure%20Manche%20en%20bois%20appropri%C3%A9%20Acier%20inoxy/510U2EW9taL._AC_.jpg",
     amazonAsin: "B0BLSWL89X",
   },
   {
@@ -84,7 +84,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/oyster-opener-set-professionnel.html",
     amazonUrl: "https://www.amazon.fr/Buttwo-douverture-inoxydable-professionnel-restaurant/dp/B09HC844P3?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/61S3OODtr2L._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Oyster%20Opener%20Set%20en%20acier%20inoxydable,%20ouvreur%20d'hu%C3%AEtres%20professionnel,%20outil%20%C3%A0%20fruits%20de%20mer%20pour%20les%20m%C3%A9nages%20de%20restaurant%20et%20les%20barbecues/31IdvR7WpVL._AC_.jpg",
     amazonAsin: "B09HC844P3",
   },
   {
@@ -94,7 +94,7 @@ const PRODUCTS = [
     badge: "Innovation",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/assiette-hu%C3%AEtres-r%C3%A9frig%C3%A9rante.html",
     amazonUrl: "https://www.amazon.fr/Glace8-r%C3%A9frig%C3%A9rante-G%C3%A9n%C3%A9ration-Innovation-fran%C3%A7aise/dp/B09LR4QQGF?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/61Qe8U-2NRL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Assiette%20%C3%A0%20hu%C3%AEtres%20r%C3%A9frig%C3%A9rante%20en%20Poche%20de%20Glace%20Nouvelle%20G%C3%A9n%C3%A9ration%20-%20Innovation%20fran%C3%A7aise%20-%20%C3%A0%20l'unit%C3%A9%20(1%20x%206%20hu%C3%AEtres%20+%20demi%20citron)/51C6R0lC5IL._AC_.jpg",
     amazonAsin: "B09LR4QQGF",
   },
   {
@@ -104,7 +104,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/pince-porte-hu%C3%AEtres-bois.html",
     amazonUrl: "https://www.amazon.fr/JDCMEI-Porte-hu%C3%AEtres-D%C3%A9caillage-Garde-Main-Pique-niques/dp/B0CVTP68LV?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/71zZLlhbE1L._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Pince%20%C3%80%20%C3%89cailler%20les%20Hu%C3%AEtres,%20Porte-hu%C3%AEtres%20en%20Bois%20Support%20D'%C3%A9caillage%20D'hu%C3%AEtres%20de%20Garde-main%20Outil%20D'ouverture%20de%20Fruits%20de%20Mer%20Handguard%20Pinces%20Portables%20pour%20F%C3%AAtes,%20Camping,/41EYY-dFnIL._AC_.jpg",
     amazonAsin: "B0CVTP68LV",
   },
   /* ── Fruits de Mer ── */
@@ -115,7 +115,7 @@ const PRODUCTS = [
     badge: "Premium",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/laguiole-set-fruits-de-mer-14-pieces.html",
     amazonUrl: "https://www.amazon.fr/Laguiole-Set-fruits-Noir-14pices/dp/B00HHNJKOU?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/81DX9oOH58L._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/LAGUIOLE%20Set%20Fruits%20de%20mer%20Noir%2014pices/41tV8h+wadL._AC_.jpg",
     amazonAsin: "B00HHNJKOU",
   },
   {
@@ -125,7 +125,7 @@ const PRODUCTS = [
     badge: "Cadeau",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/coffret-bois-fruits-de-mer-14-pieces.html",
     amazonUrl: "https://www.amazon.fr/Laguiole-Set-fruits-Noir-14pices/dp/B00HHNJKOU?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/81Rn8N+rIuL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Coffret%20bois%2014%20pi%C3%A8ces%20-%20Fruits%20de%20mer/41QFie0TiXL._AC_.jpg",
     amazonAsin: "B00HHNJKOU",
   },
   /* ── Bretagne ── */
@@ -136,7 +136,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/drapeau-bretagne-gwenn-ha-du.html",
     amazonUrl: "https://www.amazon.fr/AZ-FLAG-Bretagne-Polyester-M%C3%A9talliques/dp/B00I813YB0?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/41fMd0sC-zL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/AZ%20FLAG%20-%20Drapeau%20Bretagne%20-%20150x90%20cm%20-%20Polyester%20l%C3%A9ger%20-%20Drapeau%20Breton%20-%20France%20Avec%20Oeillets%20M%C3%A9talliques%20Int%C3%A9gr%C3%A9s%20-%2080g/31HxKZ0TMmL._AC_.jpg",
     amazonAsin: "B00I813YB0",
   },
   {
@@ -146,7 +146,7 @@ const PRODUCTS = [
     badge: "Cadeau",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/tablier-breton-jpeux-pas.html",
     amazonUrl: "https://www.amazon.fr/Planetee-passionn%C3%A9s-protection-Jardinage-m%C3%A9nag%C3%A8res/dp/B0DGHMB94X?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/61GUxPxjAbL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Planetee%20Tablier%20de%20cuisine%20breton%20J'peux%20pas%20%20Cadeau%20Original%20pour%20passionn%C3%A9s%20V%C3%AAtement%20Blouse%20de%20protection%20Barbecue%20Jardinage%20Tablier%20de%20Travail%20T%C3%A2ches%20m%C3%A9nag%C3%A8res/31w4sLdY8UL._AC_.jpg",
     amazonAsin: "B0DGHMB94X",
   },
   {
@@ -156,7 +156,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/bretagne.html",
     amazonUrl: "https://www.amazon.fr/Planetee-Beau-Papa-Cuisinier-protection-Jardinage/dp/B0DV9W6J16?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/61x1IZFVHRL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/Planetee%20Tablier%20Beau-Papa%20Breton%20%20Cadeau%20F%C3%AAte%20des%20P%C3%A8res%20original%20pour%20Cuisinier%20V%C3%AAtement%20Blouse%20de%20protection%20pour%20la%20cuisine%20Barbecue%20Jardinage%20et%20t%C3%A2ches%20m%C3%A9nag%C3%A8res/31KSc-mm5UL._AC_.jpg",
     amazonAsin: "B0DV9W6J16",
   },
   /* ── Guides Voyage ── */
@@ -167,7 +167,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/guide-routard-bretagne-nord.html",
     amazonUrl: "https://www.amazon.fr/Guide-Routard-Bretagne-Ille-Vilaine/dp/2017323381?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/81S+IzOv5YL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/routard-bretagne-nord.jpg",
     amazonAsin: "2017323381",
   },
   {
@@ -177,7 +177,7 @@ const PRODUCTS = [
     badge: "",
     ficheUrl: "https://boutique.secretsmaree.com/fiches/guide-routard-bretagne-sud.html",
     amazonUrl: "https://www.amazon.fr/Guide-Routard-Bretagne-2025-Loire-Atlantique/dp/2017314064?tag=zaffaires0c-21",
-    imageUrl: "https://m.media-amazon.com/images/I/81OKL6PtxDL._AC_SX300_.jpg",
+    imageUrl: "https://boutique.secretsmaree.com/images/products/routard-bretagne-sud.jpg",
     amazonAsin: "2017314064",
   },
 ];
@@ -278,6 +278,8 @@ export default function BoutiquePage() {
                           alt={`${product.name} — accessoire ostréicole, Boutique Larmor-Baden`}
                           className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
+                          referrerPolicy="no-referrer"
+                          crossOrigin="anonymous"
                         />
                         {product.badge && (
                           <span className={`absolute top-3 left-3 px-2.5 py-1 ${BADGE_COLORS[product.badge] || "bg-amber-500"} text-white rounded-lg text-[10px] font-bold uppercase tracking-wider`}>

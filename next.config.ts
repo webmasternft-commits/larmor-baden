@@ -13,7 +13,19 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "boutique.secretsmaree.com",
+      },
+      {
+        protocol: "https",
         hostname: "upload.wikimedia.org",
+      },
+      {
+        protocol: "https",
+        hostname: "m.media-amazon.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images-eu.ssl-images-amazon.com",
       },
     ],
   },
