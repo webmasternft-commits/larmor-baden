@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import Stripe from "stripe";
 
 const PRINTFUL_API = "https://api.printful.com";
@@ -12,6 +12,11 @@ const PRINTFUL_TOKEN = process.env.PRINTFUL_API_TOKEN ?? "";
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const sig = req.headers.get("stripe-signature") ?? "";
+
+  const stripe = getStripe();
+  if (!stripe) {
+    return NextResponse.json({ error: "Stripe non configuré" }, { status: 503 });
+  }
 
   let event: Stripe.Event;
 
