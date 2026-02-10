@@ -169,11 +169,15 @@ interface ParsedVariant {
 }
 
 function parseVariants(variants: PrintfulSyncVariant[], productName: string): ParsedVariant[] {
-  return variants.map((v) => ({
-    variant: v,
-    size: (v as Record<string, unknown>).size as string ?? extractAfterSlash(v.name, productName),
-    color: (v as Record<string, unknown>).color as string ?? "",
-  }));
+  return variants.map((v) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const raw = v as any;
+    return {
+      variant: v,
+      size: (raw.size as string) ?? extractAfterSlash(v.name, productName),
+      color: (raw.color as string) ?? "",
+    };
+  });
 }
 
 function extractAfterSlash(variantName: string, productName: string): string {
