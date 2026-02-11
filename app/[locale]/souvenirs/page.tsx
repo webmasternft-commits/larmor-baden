@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
@@ -8,29 +7,15 @@ import {
   Heart, Truck, Shield, Star, Shirt,
 } from "lucide-react";
 import { getAllProductsWithDetails, type PrintfulProductDetail } from "@/lib/printful";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 const SITE_URL = "https://larmor-baden.com";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: "Souvenirs Larmor-Baden : T-shirts, Mugs, Posters & Cadeaux | Golfe du Morbihan",
-  description:
-    "Boutique de souvenirs Larmor-Baden — T-shirts, sweats, mugs, bobs, tote bags inspirés du Golfe du Morbihan et de la Bretagne. Impression à la demande, qualité premium.",
-  alternates: { canonical: "https://larmor-baden.com/souvenirs" },
-  openGraph: {
-    title: "Souvenirs — Larmor-Baden & Golfe du Morbihan",
-    description: "T-shirts, mugs, bobs et cadeaux uniques inspirés de Larmor-Baden.",
-  },
-};
-
-/* ──── Avantages ──── */
-const ADVANTAGES = [
-  { icon: Palette, title: "Designs exclusifs", desc: "Inspirés du Golfe" },
-  { icon: Truck, title: "Livraison mondiale", desc: "Expédition rapide" },
-  { icon: Shield, title: "Qualité premium", desc: "Impression soignée" },
-  { icon: Heart, title: "Fait à la demande", desc: "Zéro gaspillage" },
-];
+interface Props {
+  params: Promise<{ locale: string }>;
+}
 
 /* ──── Helpers ──── */
 function getPreviewImage(product: PrintfulProductDetail): string {
@@ -50,30 +35,29 @@ function getCurrency(product: PrintfulProductDetail): string {
   return product.sync_variants[0]?.currency ?? "EUR";
 }
 
-function fmt(price: string | null, currency: string): string {
+function fmt(price: string | null, currency: string, locale: string): string {
   if (!price) return "";
   const n = parseFloat(price);
   try {
-    return new Intl.NumberFormat("fr-FR", { style: "currency", currency }).format(n);
+    return new Intl.NumberFormat(locale === "en" ? "en-US" : "fr-FR", { style: "currency", currency }).format(n);
   } catch {
     return `${n.toFixed(2)} ${currency}`;
   }
 }
 
-/* ──── French names & short descriptions ──── */
-function getFrenchInfo(name: string): { frName: string; shortDesc: string; badge?: string } {
+function getProductInfo(name: string, t: (key: string) => string): { label: string; shortDesc: string; badge?: string } {
   const lower = name.toLowerCase();
   if (lower.includes("tee") || lower.includes("t-shirt"))
-    return { frName: "T-shirt Classique Unisexe", shortDesc: "Coton doux, coupe confortable", badge: "Best-seller" };
+    return { label: t("tshirt") + " Unisexe", shortDesc: t("tshirtDesc"), badge: "Best-seller" };
   if (lower.includes("sweatshirt") || lower.includes("sweat"))
-    return { frName: "Sweatshirt Éco Unisexe", shortDesc: "Coton bio & polyester recyclé", badge: "Éco" };
+    return { label: t("sweatshirt") + " Unisexe", shortDesc: t("sweatshirtDesc"), badge: "Éco" };
   if (lower.includes("bucket") || lower.includes("hat"))
-    return { frName: "Bob Réversible", shortDesc: "Deux looks en un seul accessoire", badge: "Nouveau" };
+    return { label: t("bucketHat"), shortDesc: t("bucketHatDesc"), badge: "Nouveau" };
   if (lower.includes("tote") || lower.includes("bag"))
-    return { frName: "Tote Bag Éco", shortDesc: "Coton 100% biologique", badge: "Éco" };
+    return { label: t("toteBag"), shortDesc: t("toteBagDesc"), badge: "Éco" };
   if (lower.includes("mug"))
-    return { frName: "Mug Émaillé", shortDesc: "Acier émaillé, 350 ml", badge: "" };
-  return { frName: name, shortDesc: "Design exclusif Larmor-Baden" };
+    return { label: t("mug"), shortDesc: t("mugDesc"), badge: "" };
+  return { label: name, shortDesc: t("exclusiveDesign") };
 }
 
 const BADGE_COLORS: Record<string, string> = {
@@ -83,31 +67,42 @@ const BADGE_COLORS: Record<string, string> = {
 };
 
 /* ──── Page ──── */
-export default async function SouvenirsPage() {
+export default async function SouvenirsPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("souvenirs");
+  const th = await getTranslations("home");
+
   let products: PrintfulProductDetail[] = [];
   let fetchError = false;
 
   try {
     products = await getAllProductsWithDetails();
   } catch (err) {
-    console.error("[Souvenirs] Erreur chargement Printful:", err);
+    console.error("[Souvenirs] Error loading Printful:", err);
     fetchError = true;
   }
 
-  /* ── JSON-LD ItemList + BreadcrumbList ── */
+  const advantages = [
+    { icon: Palette, title: t("advantages.exclusive"), desc: t("advantages.exclusiveDesc") },
+    { icon: Truck, title: t("advantages.shipping"), desc: t("advantages.shippingDesc") },
+    { icon: Shield, title: t("advantages.quality"), desc: t("advantages.qualityDesc") },
+    { icon: Heart, title: t("advantages.eco"), desc: t("advantages.ecoDesc") },
+  ];
+
+  /* ── JSON-LD ── */
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Souvenirs Larmor-Baden — Golfe du Morbihan",
-    description: "Collection de souvenirs exclusifs inspirés de Larmor-Baden et du Golfe du Morbihan.",
     numberOfItems: products.length,
     itemListElement: products.map((p, i) => {
-      const { frName } = getFrenchInfo(p.sync_product.name);
+      const { label } = getProductInfo(p.sync_product.name, th);
       return {
         "@type": "ListItem",
         position: i + 1,
         url: `${SITE_URL}/souvenirs/${p.sync_product.id}`,
-        name: frName,
+        name: label,
         image: getPreviewImage(p),
       };
     }),
@@ -117,56 +112,39 @@ export default async function SouvenirsPage() {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Accueil", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
       { "@type": "ListItem", position: 2, name: "Souvenirs", item: `${SITE_URL}/souvenirs` },
     ],
   };
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Script
-        id="ld-souvenirs-list"
-        type="application/ld+json"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
-      />
-      <Script
-        id="ld-souvenirs-breadcrumb"
-        type="application/ld+json"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <Script id="ld-souvenirs-list" type="application/ld+json" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      <Script id="ld-souvenirs-breadcrumb" type="application/ld+json" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+
       {/* ──── Hero ──── */}
       <section className="bg-gradient-to-br from-sky-600 via-sky-700 to-cyan-800 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.3' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")",
-            }}
-          />
+          <div className="absolute inset-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.3' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")" }} />
         </div>
         <div className="container mx-auto px-4 lg:px-6 py-16 md:py-20 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 rounded-full text-sm text-sky-100 font-medium mb-5 border border-white/10">
-              <Shirt className="h-4 w-4" /> Souvenirs Larmor-Baden
+              <Shirt className="h-4 w-4" /> {t("title")}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-              Souvenirs du<br />Golfe du Morbihan
+              {t("heroTitle").split("\n").map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}
             </h1>
-            <p className="text-lg text-sky-100 max-w-xl mx-auto">
-              T-shirts, sweats, bobs, mugs et tote bags — des designs exclusifs brodés, inspirés de Larmor-Baden, Gavrinis et l&apos;Île Berder.
-            </p>
+            <p className="text-lg text-sky-100 max-w-xl mx-auto">{t("heroSubtitle")}</p>
           </div>
         </div>
       </section>
 
-      {/* ──── Avantages ──── */}
+      {/* ──── Advantages ──── */}
       <section className="bg-white border-b border-stone-100">
         <div className="container mx-auto px-4 lg:px-6 py-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {ADVANTAGES.map((a) => (
+            {advantages.map((a) => (
               <div key={a.title} className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center flex-shrink-0">
                   <a.icon className="h-5 w-5 text-sky-600" />
@@ -181,12 +159,12 @@ export default async function SouvenirsPage() {
         </div>
       </section>
 
-      {/* ──── Produits ──── */}
+      {/* ──── Products ──── */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="flex items-center gap-3 mb-8">
             <Package className="h-6 w-6 text-sky-600" />
-            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">Notre collection</h2>
+            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">{t("ourCollection")}</h2>
             {products.length > 0 && (
               <span className="text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">
                 {products.length} article{products.length > 1 ? "s" : ""}
@@ -197,16 +175,16 @@ export default async function SouvenirsPage() {
           {fetchError && (
             <div className="text-center py-16">
               <ShoppingBag className="h-12 w-12 text-stone-300 mx-auto mb-4" />
-              <p className="text-stone-500 mb-2">La boutique est en cours de préparation.</p>
-              <p className="text-sm text-stone-400">Les produits seront bientôt disponibles.</p>
+              <p className="text-stone-500 mb-2">{t("noProducts")}</p>
+              <p className="text-sm text-stone-400">{t("noProductsDesc")}</p>
             </div>
           )}
 
           {!fetchError && products.length === 0 && (
             <div className="text-center py-16">
               <Shirt className="h-12 w-12 text-stone-300 mx-auto mb-4" />
-              <p className="text-stone-500 mb-2">La collection arrive bientôt !</p>
-              <p className="text-sm text-stone-400">Nos designs exclusifs Larmor-Baden sont en cours de création.</p>
+              <p className="text-stone-500 mb-2">{t("noProducts")}</p>
+              <p className="text-sm text-stone-400">{t("noProductsDesc")}</p>
             </div>
           )}
 
@@ -218,39 +196,25 @@ export default async function SouvenirsPage() {
                 const currency = getCurrency(product);
                 const variantCount = product.sync_variants.length;
                 const pid = product.sync_product.id;
-                const { frName, shortDesc, badge } = getFrenchInfo(product.sync_product.name);
+                const { label, shortDesc, badge } = getProductInfo(product.sync_product.name, th);
 
                 return (
                   <Link key={pid} href={`/souvenirs/${pid}`} className="group">
                     <Card className="overflow-hidden border-stone-200/60 hover:shadow-[var(--shadow-lg)] transition-all duration-300 hover:-translate-y-1 bg-white h-full">
                       <div className="relative h-72 overflow-hidden bg-stone-50 flex items-center justify-center">
-                        <Image
-                          src={imageUrl}
-                          alt={`${frName} — souvenir Larmor-Baden, Golfe du Morbihan`}
-                          fill
-                          className="object-contain group-hover:scale-105 transition-transform duration-500 p-6"
-                          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
-                        />
+                        <Image src={imageUrl} alt={`${label} — souvenir Larmor-Baden`} fill className="object-contain group-hover:scale-105 transition-transform duration-500 p-6" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw" />
                         {badge && (
-                          <span className={`absolute top-3 left-3 px-2.5 py-1 ${BADGE_COLORS[badge] ?? "bg-sky-600"} text-white rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm`}>
-                            {badge}
-                          </span>
+                          <span className={`absolute top-3 left-3 px-2.5 py-1 ${BADGE_COLORS[badge] ?? "bg-sky-600"} text-white rounded-lg text-[10px] font-bold uppercase tracking-wider shadow-sm`}>{badge}</span>
                         )}
                       </div>
                       <CardContent className="p-5">
-                        <h3 className="font-semibold text-stone-900 mb-1 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">
-                          {frName}
-                        </h3>
+                        <h3 className="font-semibold text-stone-900 mb-1 leading-snug group-hover:text-sky-700 transition-colors line-clamp-2">{label}</h3>
                         <p className="text-xs text-stone-400 mb-3">{shortDesc}</p>
                         <div className="flex items-center justify-between">
-                          {price && (
-                            <span className="text-lg font-bold text-sky-700">
-                              {fmt(price, currency)}
-                            </span>
-                          )}
+                          {price && <span className="text-lg font-bold text-sky-700">{fmt(price, currency, locale)}</span>}
                           {variantCount > 1 && (
                             <span className="text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">
-                              {variantCount} taille{variantCount > 1 ? "s" : ""}
+                              {variantCount} {t("sizes")}
                             </span>
                           )}
                         </div>
@@ -264,31 +228,27 @@ export default async function SouvenirsPage() {
         </div>
       </section>
 
-      {/* ──── Section Qualité ──── */}
+      {/* ──── Quality Section ──── */}
       <section className="py-12 md:py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <Star className="h-8 w-8 text-sky-600 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-stone-900 mb-4 tracking-tight">
-            Impression à la demande, qualité garantie
-          </h2>
-          <p className="text-stone-500 max-w-2xl mx-auto mb-8 leading-relaxed">
-            Chaque produit est imprimé à la commande. Zéro gaspillage, couleurs éclatantes et qualité irréprochable. Livraison partout dans le monde.
-          </p>
+          <h2 className="text-2xl font-bold text-stone-900 mb-4 tracking-tight">{t("advantages.quality")}</h2>
+          <p className="text-stone-500 max-w-2xl mx-auto mb-8 leading-relaxed">{t("collectionSubtitle")}</p>
           <div className="grid sm:grid-cols-3 gap-6">
             <div className="p-6 rounded-2xl bg-sky-50/50 border border-sky-100">
               <span className="text-3xl mb-3 block">🎨</span>
-              <h3 className="font-semibold text-stone-900 mb-1">Designs originaux</h3>
-              <p className="text-xs text-stone-500">Créations uniques inspirées du Golfe du Morbihan</p>
+              <h3 className="font-semibold text-stone-900 mb-1">{t("advantages.exclusive")}</h3>
+              <p className="text-xs text-stone-500">{t("advantages.exclusiveDesc")}</p>
             </div>
             <div className="p-6 rounded-2xl bg-sky-50/50 border border-sky-100">
               <span className="text-3xl mb-3 block">🌍</span>
-              <h3 className="font-semibold text-stone-900 mb-1">Livraison mondiale</h3>
-              <p className="text-xs text-stone-500">Expédié depuis le centre le plus proche de chez vous</p>
+              <h3 className="font-semibold text-stone-900 mb-1">{t("advantages.shipping")}</h3>
+              <p className="text-xs text-stone-500">{t("advantages.shippingDesc")}</p>
             </div>
             <div className="p-6 rounded-2xl bg-sky-50/50 border border-sky-100">
               <span className="text-3xl mb-3 block">♻️</span>
-              <h3 className="font-semibold text-stone-900 mb-1">Éco-responsable</h3>
-              <p className="text-xs text-stone-500">Production à la demande, zéro surstock</p>
+              <h3 className="font-semibold text-stone-900 mb-1">{t("advantages.eco")}</h3>
+              <p className="text-xs text-stone-500">{t("advantages.ecoDesc")}</p>
             </div>
           </div>
         </div>

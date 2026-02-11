@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { setRequestLocale } from "next-intl/server";
 
 /* ═══════════════════════════════════════════════════════════════════
    DONNÉES PROFESSIONNELS — FICHES DÉTAILLÉES
@@ -144,7 +145,7 @@ export async function generateStaticParams() {
   return Object.keys(professionals).map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const pro = professionals[slug];
   if (!pro) return { title: "Fiche non trouvée" };
@@ -161,8 +162,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function ProfessionalDetail({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function ProfessionalDetail({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const pro = professionals[slug];
   if (!pro) notFound();
 

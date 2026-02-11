@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Conditions Générales - Larmor-Baden",
   description: "Conditions générales d'utilisation du site Larmor-Baden.com",
 };
 
-export default function CGV() {
+interface Props { params: Promise<{ locale: string }>; }
+
+export default async function CGV({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <div className="min-h-screen bg-[var(--background)]">
       <div className="container mx-auto px-4 lg:px-6 py-14 max-w-3xl">

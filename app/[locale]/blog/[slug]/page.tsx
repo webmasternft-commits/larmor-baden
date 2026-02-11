@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { ArrowLeft, Calendar, Clock, Share2, Facebook, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { setRequestLocale } from "next-intl/server";
 
 const posts: Record<string, {
   title: string;
@@ -876,7 +877,7 @@ export async function generateStaticParams() {
   return Object.keys(posts).map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = posts[slug];
   if (!post) return { title: "Article non trouvé" };
@@ -892,8 +893,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function BlogPost({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const post = posts[slug];
   if (!post) notFound();
 

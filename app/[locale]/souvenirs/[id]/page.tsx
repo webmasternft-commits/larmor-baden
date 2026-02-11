@@ -3,13 +3,14 @@ import { notFound } from "next/navigation";
 import Script from "next/script";
 import ProductDetailClient from "./ProductDetailClient";
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 
 export const revalidate = 300;
 
 const SITE_URL = "https://larmor-baden.com";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ locale: string; id: string }>;
 }
 
 /* ──── French name helper (same logic as client) ──── */
@@ -48,7 +49,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
+  const { id } = await params; // locale also available via params
   try {
     const detail = await getProductDetail(Number(id));
     const frName = getFrenchName(detail.sync_product.name);
@@ -91,7 +92,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { id } = await params;
+  const { locale, id } = await params;
+  setRequestLocale(locale);
   const productId = Number(id);
   if (isNaN(productId)) notFound();
 

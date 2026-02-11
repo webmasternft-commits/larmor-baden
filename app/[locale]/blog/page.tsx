@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Blog Larmor-Baden : Guides, Conseils & Bons Plans Golfe du Morbihan",
@@ -48,7 +49,11 @@ const CATEGORY_COLORS: Record<string, string> = {
   Itinéraire: "bg-lime-50 text-lime-700",
 };
 
-export default function BlogPage() {
+interface Props { params: Promise<{ locale: string }>; }
+
+export default async function BlogPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const featured = blogPosts[0];
   const rest = blogPosts.slice(1);
 

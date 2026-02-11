@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Compass, Clock, TrendingUp, Route, Users, ArrowLeft, Heart, Share2, MapPin, AlertTriangle, Wrench } from "lucide-react";
 import { mockHikes } from "@/lib/mock-data";
+import { setRequestLocale } from "next-intl/server";
 
 export async function generateStaticParams() {
   return mockHikes.map((hike) => ({
@@ -11,7 +12,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { slug } = await params;
   const hike = mockHikes.find((h) => h.slug === slug);
   
@@ -32,8 +33,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function RandonneeDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function RandonneeDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const hike = mockHikes.find((h) => h.slug === slug);
 
   if (!hike) {

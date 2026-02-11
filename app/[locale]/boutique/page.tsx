@@ -6,6 +6,7 @@ import {
   ShoppingBag, Star, ExternalLink, ArrowRight,
   Heart, Gift, Shield, CheckCircle2, Truck,
 } from "lucide-react";
+import { setRequestLocale } from "next-intl/server";
 
 const BOUTIQUE_URL = "https://boutique.secretsmaree.com";
 const UTM = "?utm_source=larmor-baden.com&utm_medium=boutique&utm_campaign=page";
@@ -206,7 +207,11 @@ const BADGE_COLORS: Record<string, string> = {
   Cadeau: "bg-pink-500",
 };
 
-export default function BoutiquePage() {
+interface Props { params: Promise<{ locale: string }>; }
+
+export default async function BoutiquePage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* ──── Hero ──── */}

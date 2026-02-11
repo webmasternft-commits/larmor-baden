@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Users, DollarSign, Car, Sparkles, ArrowRight } from "lucide-react";
 import { mockItineraries } from "@/lib/mock-data";
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Itinéraires Larmor-Baden : Week-end, Famille, Romantique | Golfe du Morbihan",
@@ -19,7 +20,11 @@ export const metadata: Metadata = {
 const BUDGET_LABELS: Record<string, string> = { economique: "Éco", moyen: "Moyen", eleve: "Premium" };
 const BUDGET_COLORS: Record<string, string> = { economique: "text-emerald-600", moyen: "text-amber-600", eleve: "text-violet-600" };
 
-export default function ItinerairesPage() {
+interface Props { params: Promise<{ locale: string }>; }
+
+export default async function ItinerairesPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Hero */}

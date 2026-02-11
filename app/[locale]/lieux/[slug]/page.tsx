@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Clock, DollarSign, Users, Calendar, ArrowLeft, Heart, Share2, ChevronRight } from "lucide-react";
 import { mockPois } from "@/lib/mock-data";
+import { setRequestLocale } from "next-intl/server";
 
 const TYPE_COLORS: Record<string, string> = {
   port: "bg-sky-50 text-sky-700", ile: "bg-emerald-50 text-emerald-700",
@@ -16,7 +17,7 @@ export async function generateStaticParams() {
   return mockPois.map((poi) => ({ slug: poi.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { slug } = await params;
   const poi = mockPois.find((p) => p.slug === slug);
   if (!poi) return { title: "Lieu non trouvé" };
@@ -27,8 +28,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function LieuDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function LieuDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
   const poi = mockPois.find((p) => p.slug === slug);
   if (!poi) notFound();
 
