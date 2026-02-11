@@ -1,13 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { Menu, X, Search } from "lucide-react";
+import { useTranslations } from "next-intl";
 import CartButton from "@/components/cart/CartButton";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Header() {
+  const t = useTranslations("header");
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -18,18 +21,17 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => { setIsOpen(false); }, [pathname]);
 
   const navItems = [
-    { name: "Lieux", href: "/lieux" },
-    { name: "Randonnées", href: "/randonnees" },
-    { name: "Carte", href: "/carte" },
-    { name: "Annuaire", href: "/annuaire" },
-    { name: "Boutique", href: "/boutique" },
-    { name: "Souvenirs", href: "/souvenirs" },
-    { name: "Blog", href: "/blog" },
-    { name: "Planifier", href: "/planifier" },
+    { name: t("places"), href: "/lieux" as const },
+    { name: t("hikes"), href: "/randonnees" as const },
+    { name: t("map"), href: "/carte" as const },
+    { name: t("directory"), href: "/annuaire" as const },
+    { name: t("shop"), href: "/boutique" as const },
+    { name: t("souvenirs"), href: "/souvenirs" as const },
+    { name: t("blog"), href: "/blog" as const },
+    { name: t("plan"), href: "/planifier" as const },
   ];
 
   const isActive = (path: string) => pathname === path || (path !== "/" && pathname.startsWith(path));
@@ -44,7 +46,6 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex h-20 items-center justify-between">
-          {/* Brand */}
           <Link href="/" className="flex items-center group">
             <Image
               src="/logo-larmor-baden.png"
@@ -56,7 +57,6 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
@@ -80,28 +80,29 @@ export default function Header() {
             <Link
               href="/recherche"
               className="p-2.5 rounded-lg text-stone-500 hover:text-[var(--ocean)] hover:bg-stone-100 transition-all"
-              aria-label="Rechercher"
+              aria-label={t("search")}
             >
               <Search className="h-[18px] w-[18px]" />
             </Link>
 
             <CartButton />
+            <LanguageSwitcher />
           </nav>
 
-          {/* Mobile controls */}
           <div className="flex items-center gap-2 lg:hidden">
             <Link
               href="/recherche"
               className="p-2 rounded-lg text-stone-500 hover:bg-stone-100"
-              aria-label="Rechercher"
+              aria-label={t("search")}
             >
               <Search className="h-5 w-5" />
             </Link>
             <CartButton />
+            <LanguageSwitcher />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-stone-700 hover:bg-stone-100 transition-colors"
-              aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-label={isOpen ? t("closeMenu") : t("openMenu")}
               aria-expanded={isOpen}
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -109,7 +110,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Nav */}
         {isOpen && (
           <nav className="lg:hidden pb-4 pt-2 border-t border-stone-100 animate-fade-in">
             <div className="flex flex-col gap-0.5">
