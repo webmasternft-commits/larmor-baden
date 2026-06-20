@@ -70,6 +70,11 @@ Tous les deux ans, le port de Larmor-Baden est l'un des principaux rassemblement
 
 Le port se trouve au centre du bourg de Larmor-Baden (56870), à 15 km de Vannes par la D101. En été, privilégiez le covoiturage ou le bus (ligne 24 Kicéo depuis Vannes) car le stationnement est limité. La mairie est à deux pas, au 2 Place de l'église.
     `,
+    faq: [
+      { q: "Où se garer au port de Larmor-Baden ?", a: "Un parking gratuit se trouve à proximité immédiate du port, mais il est limité en été : arrivez tôt ou privilégiez le bus (ligne 24 Kicéo depuis Vannes)." },
+      { q: "D'où partent les bateaux pour Gavrinis ?", a: "Le port de Larmor-Baden est le seul point de départ pour le Cairn de Gavrinis. La traversée dure environ 15 minutes." },
+      { q: "Que faire au port de Larmor-Baden ?", a: "Embarquer pour Gavrinis, observer les ostréiculteurs et acheter des huîtres, emprunter le sentier côtier GR34 et profiter des restaurants face au Golfe." },
+    ],
   },
   "meteo-larmor-baden-quand-partir": {
     title: "Météo Larmor-Baden : climat, températures et meilleure période pour visiter",
@@ -127,6 +132,11 @@ Quelle que soit la saison, emportez toujours :
 - Un maillot de bain (même au printemps, on ne sait jamais !)
 - Des jumelles (pour observer les oiseaux à Pen en Toul)
     `,
+    faq: [
+      { q: "Quelle est la meilleure période pour visiter Larmor-Baden ?", a: "D'avril à octobre. Mai, juin et septembre offrent le meilleur compromis : météo agréable, sites ouverts et beaucoup moins de monde qu'en juillet-août." },
+      { q: "Quelle est la température de l'eau en été à Larmor-Baden ?", a: "L'eau de mer oscille entre 17 °C et 20 °C en juillet-août. Septembre reste agréable avec une eau encore à 18-19 °C." },
+      { q: "Pleut-il beaucoup à Larmor-Baden ?", a: "Non : environ 750 mm de pluie par an, nettement moins que la moyenne bretonne, grâce au microclimat du Golfe. Les averses sont souvent courtes." },
+    ],
   },
   "restaurants-larmor-baden": {
     title: "Restaurants à Larmor-Baden : les meilleures adresses où manger",
@@ -182,6 +192,11 @@ En juillet et août, Larmor-Baden organise des **marchés nocturnes festifs** av
 - **Spécialité à ne pas manquer** : le plateau de fruits de mer pour 2, avec huîtres, langoustines, bulots et palourdes
 - **Avec des enfants** : les crêperies sont toujours une valeur sûre
     `,
+    faq: [
+      { q: "Où manger des fruits de mer à Larmor-Baden ?", a: "Les restaurants du port servent huîtres du Golfe et plateaux de fruits de mer. Chez Lucien, face au port, est une institution locale." },
+      { q: "Faut-il réserver son restaurant à Larmor-Baden ?", a: "Oui, la réservation est fortement conseillée en juillet-août, surtout le week-end et dans les adresses du port." },
+      { q: "Y a-t-il un marché à Larmor-Baden ?", a: "Oui, un marché de producteurs locaux se tient chaque jeudi matin sur la place de l'église, avec des marchés nocturnes festifs en juillet-août." },
+    ],
   },
   "camping-larmor-baden-guide": {
     title: "Camping Larmor-Baden : guide des campings et séjours nature",
@@ -311,6 +326,11 @@ Sur la presqu'île de Rhuys, à 30 minutes en voiture, la grande plage du Fogeo 
 
 Les plages du Golfe du Morbihan sont surveillées en été. La qualité de l'eau est régulièrement contrôlée par l'ARS et généralement excellente à Larmor-Baden. Attention toutefois aux courants dans le goulet du Golfe — restez dans les zones de baignade balisées et ne nagez jamais seul.
     `,
+    faq: [
+      { q: "Quelle est la principale plage de Larmor-Baden ?", a: "La plage de Berchis : familiale, orientée sud-est, avec des eaux calmes et peu profondes idéales pour les enfants et une vue sur le Golfe." },
+      { q: "Peut-on se baigner à marée basse à Larmor-Baden ?", a: "Préférez la marée haute pour la baignade. À marée basse, l'estran se découvre sur plusieurs dizaines de mètres : moins agréable pour nager, mais parfait pour la pêche à pied." },
+      { q: "Y a-t-il un parking près de la plage de Berchis ?", a: "Oui, un parking gratuit se trouve à proximité de la plage de Berchis." },
+    ],
   },
   "vvf-larmor-baden-village-vacances": {
     title: "VVF Larmor-Baden : village vacances au bord du Golfe du Morbihan",
@@ -439,6 +459,10 @@ Pour les budgets plus serrés ou les amoureux de la nature, le camping Ker Eden 
 - **Taxe de séjour** : environ 0,50 à 2€ par personne par nuit selon la catégorie
 - **Animaux** : vérifiez les conditions d'accueil des animaux auprès de chaque hébergement
     `,
+    faq: [
+      { q: "Où dormir à Larmor-Baden ?", a: "Hôtels familiaux, chambres d'hôtes de charme, gîtes, locations de vacances, camping Ker Eden et VVF Villages. Les communes voisines (Baden, Arradon) et Vannes offrent aussi un large choix." },
+      { q: "Quand réserver son hébergement à Larmor-Baden ?", a: "Dès janvier pour un séjour en juillet-août. Hors saison (mai, juin, septembre), les tarifs sont souvent divisés par deux." },
+    ],
   },
   "horaires-marees-larmor-baden": {
     title: "Horaires des marées à Larmor-Baden : calendrier et conseils pratiques",
@@ -653,6 +677,10 @@ Revenez à Larmor-Baden par la route côtière en passant par **Arradon**. Arrê
 - Téléchargez une carte des sentiers sur votre téléphone
 - Le **marché du jeudi** à Larmor-Baden est une étape gourmande à ne pas manquer si vous êtes là le bon jour
     `,
+    faq: [
+      { q: "Que faire en un week-end à Larmor-Baden ?", a: "Jour 1 : Cairn de Gavrinis le matin, déjeuner au port, sentier côtier vers Pen en Toul et coucher de soleil sur l'Île Berder. Jour 2 : Île aux Moines à vélo puis visite de Vannes." },
+      { q: "Quel budget prévoir pour un week-end à Larmor-Baden ?", a: "Comptez environ 200 à 450 € par personne pour deux jours, hébergement, visites, traversées et restaurants compris." },
+    ],
   },
   /* ═══════════════════════════════════════════════════════════════════
      ARTICLES EXISTANTS
@@ -743,6 +771,10 @@ La portion la plus spectaculaire du sentier des douaniers dans le Golfe. Points 
 - Les sentiers peuvent être boueux après la pluie — chaussures adaptées indispensables
 - Le Golfe est une zone protégée : restez sur les sentiers balisés
     `,
+    faq: [
+      { q: "Quelles sont les plus belles randonnées autour de Larmor-Baden ?", a: "Le sentier côtier GR34, le tour de l'Île aux Moines (12,5 km), la boucle de Pen en Toul, le tour de l'Île Berder à marée basse et le GR34 de Baden à Locmariaquer." },
+      { q: "Le GR34 passe-t-il par Larmor-Baden ?", a: "Oui. Le GR34 (sentier des douaniers) longe la côte et traverse directement le port de Larmor-Baden, offrant des vues sur Gavrinis et les îles du Golfe." },
+    ],
   },
   "cairn-gavrinis-tresor-neolithique": {
     title: "Le Cairn de Gavrinis : un trésor néolithique unique en Europe",
@@ -809,6 +841,10 @@ Remontez tranquillement vers l'embarcadère en passant par les ruelles fleuries 
 - Prévoyez un pique-nique si vous voulez rester sur les plages
 - En été, les premiers et derniers bateaux sont les moins fréquentés
     `,
+    faq: [
+      { q: "Comment aller à l'Île aux Moines ?", a: "Des navettes partent de Port-Blanc (Baden), à 10 minutes en voiture de Larmor-Baden. La traversée dure 5 minutes, avec un départ toutes les 30 minutes en saison." },
+      { q: "Peut-on louer des vélos sur l'Île aux Moines ?", a: "Oui, la location de vélos est disponible dès le débarquement. L'île est interdite aux voitures, ce qui en fait un cadre idéal pour explorer à vélo ou à pied." },
+    ],
   },
   "gastronomie-bretonne-morbihan": {
     title: "Gastronomie bretonne : les spécialités à goûter dans le Morbihan",
@@ -1010,6 +1046,24 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
             dangerouslySetInnerHTML={{ __html: markdownToHtml(post.content) }}
           />
         </article>
+
+        {/* Outil pratique : marées en direct (lien interne) */}
+        <Link
+          href={`${locale === "en" ? "/en" : ""}/marees`}
+          className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-sky-200 bg-sky-50 p-5 hover:border-sky-300 transition-colors"
+        >
+          <div>
+            <p className="font-semibold text-sky-900">
+              {locale === "en" ? "Check live tide times in Larmor-Baden" : "Consultez les horaires des marées à Larmor-Baden"}
+            </p>
+            <p className="text-sm text-sky-700/80 mt-0.5">
+              {locale === "en"
+                ? "High & low tides, Berder Island access windows."
+                : "Pleines et basses mers, accès à l'Île Berder à pied."}
+            </p>
+          </div>
+          <span className="text-sky-600 text-xl flex-shrink-0">→</span>
+        </Link>
 
         {/* FAQ */}
         {post.faq && post.faq.length > 0 && (

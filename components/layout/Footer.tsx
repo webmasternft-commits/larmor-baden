@@ -145,6 +145,7 @@ export default function Footer() {
               {[
                 { href: "/lieux" as const, label: t("placesOfInterest") },
                 { href: "/randonnees" as const, label: t("hikes") },
+                { href: "/marees" as const, label: t("tides") },
                 { href: "/itineraires" as const, label: t("itineraries") },
                 { href: "/carte" as const, label: t("interactiveMap") },
                 { href: "/annuaire" as const, label: t("proDirectory") },
