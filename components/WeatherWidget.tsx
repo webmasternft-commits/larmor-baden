@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
   Sun, Cloud, CloudRain, CloudSnow, CloudDrizzle, CloudLightning,
-  CloudFog, Wind, Droplets, Thermometer, Eye,
+  CloudFog, Wind, Droplets, Thermometer,
 } from "lucide-react";
 
 /* ────────────────────────────────────────────────────────────────

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { ArrowLeft, Calendar, Clock, Share2, Facebook, Twitter } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { setRequestLocale } from "next-intl/server";
 
@@ -14,6 +14,7 @@ const posts: Record<string, {
   readTime: string;
   imageUrl: string;
   content: string;
+  faq?: { q: string; a: string }[];
 }> = {
   /* ═══════════════════════════════════════════════════════════════════
      10 NOUVEAUX ARTICLES SEO
@@ -511,6 +512,12 @@ Les grandes marées ont lieu environ tous les 14 jours, aux nouvelles et pleines
 - Ne vous aventurez pas sur les vasières éloignées du rivage
 - Les courants du Golfe sont parmi les plus forts d'Europe — respectez les zones de baignade
     `,
+    faq: [
+      { q: "Où consulter les horaires des marées à Larmor-Baden ?", a: "Les horaires de pleine mer et basse mer, les coefficients et les hauteurs d'eau pour Larmor-Baden sont consultables gratuitement en ligne, ainsi qu'à la capitainerie du port et à l'office de tourisme du Golfe du Morbihan." },
+      { q: "Comment accéder à l'Île Berder à pied depuis Larmor-Baden ?", a: "L'Île Berder est reliée à Larmor-Baden par un passage submersible (gué) praticable uniquement autour de la basse mer, environ 2 heures avant et 2 heures après la marée basse." },
+      { q: "Combien de temps le passage de l'Île Berder reste-t-il ouvert ?", a: "Le passage est praticable environ 4 heures par cycle de marée et recouvert le reste du temps. Vérifiez toujours les horaires avant de traverser et ne vous engagez jamais si l'eau commence à monter." },
+      { q: "Qu'est-ce que le coefficient de marée ?", a: "Le coefficient va de 20 (mortes-eaux) à 120 (vives-eaux exceptionnelles). Plus il est élevé, plus le marnage et les courants sont importants. Les grandes marées (coefficient supérieur à 90) sont idéales pour la pêche à pied." },
+    ],
   },
   "gavrinis-excursion-larmor-baden": {
     title: "Larmor-Baden — Gavrinis : guide pratique de l'excursion en bateau",
@@ -572,6 +579,13 @@ Une journée idéale à Larmor-Baden peut inclure :
 - **Après-midi** : tour de l'Île Berder à marée basse — vérifiez les horaires sur [maree.secretsmaree.com](https://maree.secretsmaree.com)
 - **Soir** : balade sur le sentier côtier GR34 et coucher de soleil sur le Golfe
     `,
+    faq: [
+      { q: "Comment se rendre sur l'île de Gavrinis ?", a: "Le Cairn de Gavrinis est accessible uniquement en bateau. Le seul point de départ est le port de Larmor-Baden (56870). La traversée dure environ 15 minutes." },
+      { q: "Quels sont les horaires des bateaux pour Gavrinis depuis Larmor-Baden ?", a: "Les départs ont lieu d'avril à septembre, avec plusieurs rotations par jour depuis le port de Larmor-Baden. Les horaires précis varient selon la saison : réservez votre créneau à l'avance, surtout en juillet-août." },
+      { q: "Quel est le tarif de la visite du Cairn de Gavrinis ?", a: "Comptez environ 15 € par adulte, 8 € par enfant (6-17 ans) et gratuit pour les moins de 6 ans. La visite est gérée par le Département du Morbihan." },
+      { q: "Faut-il réserver pour visiter Gavrinis ?", a: "Oui, la réservation est fortement recommandée et devient indispensable en juillet-août, car le nombre de places par traversée est limité." },
+      { q: "Combien de temps dure la visite de Gavrinis ?", a: "Comptez environ 1h15 au total, traversée aller-retour et visite guidée du cairn comprises." },
+    ],
   },
   "week-end-larmor-baden-itineraire": {
     title: "Week-end à Larmor-Baden : itinéraire idéal de 2 jours",
@@ -878,17 +892,22 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = posts[slug];
   if (!post) return { title: "Article non trouvé" };
+  const path = locale === "en" ? `/en/blog/${slug}` : `/blog/${slug}`;
   return {
-    title: `${post.title} - Blog Larmor-Baden`,
+    // post.title already contains "Larmor-Baden"; the root template appends the brand once
+    title: post.title,
     description: post.excerpt,
+    alternates: { canonical: path },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       images: [post.imageUrl],
       type: "article",
+      publishedTime: post.date,
+      url: path,
     },
   };
 }
@@ -899,7 +918,22 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
   const post = posts[slug];
   if (!post) notFound();
 
-  const structuredData = {
+  const SITE_URL = "https://larmor-baden.com";
+  const path = locale === "en" ? `/en/blog/${slug}` : `/blog/${slug}`;
+
+  // Articles liés : priorité à la même catégorie, complété par les plus récents
+  const related = Object.entries(posts)
+    .filter(([s]) => s !== slug)
+    .sort(([, a], [, b]) => {
+      const sameA = a.category === post.category ? 0 : 1;
+      const sameB = b.category === post.category ? 0 : 1;
+      if (sameA !== sameB) return sameA - sameB;
+      return b.date.localeCompare(a.date);
+    })
+    .slice(0, 3)
+    .map(([s, p]) => ({ slug: s, title: p.title, excerpt: p.excerpt, category: p.category, imageUrl: p.imageUrl }));
+
+  const blogPostingSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
@@ -907,11 +941,41 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
     image: post.imageUrl,
     datePublished: post.date,
     author: { "@type": "Organization", name: "Larmor-Baden.com" },
+    publisher: {
+      "@type": "Organization",
+      name: "Larmor-Baden.com",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo-larmor-baden.png` },
+    },
+    mainEntityOfPage: `${SITE_URL}${path}`,
   };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}${path}` },
+    ],
+  };
+
+  const faqSchema = post.faq && post.faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
       {/* Hero */}
       <div className="relative h-[50vh] overflow-hidden">
@@ -947,6 +1011,24 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
           />
         </article>
 
+        {/* FAQ */}
+        {post.faq && post.faq.length > 0 && (
+          <section className="mt-10" aria-labelledby="faq-title">
+            <h2 id="faq-title" className="text-2xl font-bold text-gray-900 mb-5">Questions fréquentes</h2>
+            <div className="space-y-3">
+              {post.faq.map((f, i) => (
+                <details key={i} className="group bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+                  <summary className="flex items-center justify-between cursor-pointer list-none font-semibold text-gray-900">
+                    {f.q}
+                    <span className="ml-4 text-sky-600 transition-transform group-open:rotate-45 text-xl leading-none">+</span>
+                  </summary>
+                  <p className="mt-3 text-gray-600 leading-relaxed">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Share */}
         <div className="flex items-center gap-3 mt-8">
           <span className="text-sm text-gray-500">Partager :</span>
@@ -961,6 +1043,30 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
             </a>
           </Button>
         </div>
+
+        {/* Articles liés */}
+        {related.length > 0 && (
+          <section className="mt-12" aria-labelledby="related-title">
+            <h2 id="related-title" className="text-2xl font-bold text-gray-900 mb-5">À lire aussi</h2>
+            <div className="grid sm:grid-cols-3 gap-5">
+              {related.map((r) => (
+                <Link
+                  key={r.slug}
+                  href={`${locale === "en" ? "/en" : ""}/blog/${r.slug}`}
+                  className="group block bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="relative h-32 overflow-hidden">
+                    <Image src={r.imageUrl} alt={r.title} fill className="object-cover group-hover:scale-105 transition-transform" sizes="(max-width:640px) 100vw, 33vw" />
+                  </div>
+                  <div className="p-4">
+                    <span className="text-xs font-medium text-sky-600">{r.category}</span>
+                    <h3 className="font-semibold text-gray-900 mt-1 leading-snug line-clamp-2 group-hover:text-sky-700">{r.title}</h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

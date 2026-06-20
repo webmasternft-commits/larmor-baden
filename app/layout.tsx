@@ -11,9 +11,9 @@ const inter = Inter({
 
 const SITE_URL = "https://larmor-baden.com";
 const SITE_NAME = "Larmor-Baden.com";
-const SITE_TITLE = "Larmor-Baden : Guide Touristique du Golfe du Morbihan | Que faire, Restaurants, Plages, Hôtels";
+const SITE_TITLE = "Larmor-Baden : que faire, Gavrinis, marées & plages (Morbihan)";
 const SITE_DESCRIPTION =
-  "Guide complet de Larmor-Baden (56870, Morbihan) et du Golfe du Morbihan en Bretagne : Cairn de Gavrinis, Île Berder, Île aux Moines, GR34, restaurants, hôtels, campings.";
+  "Que faire à Larmor-Baden ? Excursion au Cairn de Gavrinis, horaires des marées et accès à l'Île Berder à pied, plages, sentier côtier GR34, restaurants et marché. Le guide complet du Golfe du Morbihan.";
 
 export const viewport: Viewport = {
   themeColor: "#0c4a6e",

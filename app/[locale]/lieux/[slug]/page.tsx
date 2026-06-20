@@ -3,9 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, DollarSign, Users, Calendar, ArrowLeft, Heart, Share2, ChevronRight } from "lucide-react";
+import { Clock, DollarSign, Users, Calendar, ArrowLeft, Heart, Share2, ChevronRight, type LucideIcon } from "lucide-react";
 import { mockPois } from "@/lib/mock-data";
 import { setRequestLocale } from "next-intl/server";
+
+type InfoCard = { icon: LucideIcon; label: string; value: string; color: string };
 
 const TYPE_COLORS: Record<string, string> = {
   port: "bg-sky-50 text-sky-700", ile: "bg-emerald-50 text-emerald-700",
@@ -85,7 +87,7 @@ export default async function LieuDetailPage({ params }: { params: Promise<{ loc
                 { icon: DollarSign, label: "Tarif", value: poi.priceLevel === 0 ? "Gratuit" : "€".repeat(poi.priceLevel), color: "bg-amber-50 text-amber-600" },
                 poi.kidFriendly && { icon: Users, label: "Famille", value: "Oui", color: "bg-violet-50 text-violet-600" },
                 poi.season?.length && { icon: Calendar, label: "Saison", value: poi.season.slice(0, 2).join(", "), color: "bg-orange-50 text-orange-600" },
-              ].filter(Boolean).map((item: any) => (
+              ].filter((c): c is InfoCard => Boolean(c)).map((item) => (
                 <div key={item.label} className="bg-white rounded-xl border border-stone-200/60 p-4 text-center">
                   <div className={`w-10 h-10 rounded-xl ${item.color} flex items-center justify-center mx-auto mb-2`}>
                     <item.icon className="w-5 h-5" />

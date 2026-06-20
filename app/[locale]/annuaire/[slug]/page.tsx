@@ -3,10 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import {
-  ArrowLeft, Star, MapPin, Clock, Users, Phone, Globe,
-  Instagram, BadgeCheck, ChevronRight, ExternalLink,
+  ArrowLeft, Star, MapPin, Clock, Users, Globe,
+  Instagram, BadgeCheck, ExternalLink,
   CheckCircle2, Quote, ChevronDown, Calendar, Euro,
-  Camera, Heart, Shield, Waves,
+  Shield, Waves,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

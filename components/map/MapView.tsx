@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
-import { X, Layers, Clock, MapPin, ChevronRight } from "lucide-react";
+import { X, Layers, MapPin, ChevronRight } from "lucide-react";
+import type { Map as MlMap, Marker as MlMarker, Popup as MlPopup } from "maplibre-gl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { mockPois } from "@/lib/mock-data";
-import Link from "next/link";
+
+type MaplibreModule = typeof import("maplibre-gl");
 
 /* ────────────────────────────────────────────────────────────────
    CONFIGURATION
@@ -34,10 +36,10 @@ const TYPE_CONFIG: Record<string, { color: string; label: string; emoji: string 
 
 export default function MapView() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
-  const popupRef = useRef<any>(null);
-  const mlRef = useRef<any>(null); // store maplibre module
+  const mapRef = useRef<MlMap | null>(null);
+  const markersRef = useRef<MlMarker[]>([]);
+  const popupRef = useRef<MlPopup | null>(null);
+  const mlRef = useRef<MaplibreModule | null>(null); // store maplibre module
 
   const [selected, setSelected] = useState<(typeof mockPois)[0] | null>(null);
   const [filters, setFilters] = useState<string[]>([]);
@@ -113,7 +115,7 @@ export default function MapView() {
         setTimeout(() => {
           if (!cancelled && !ready) setReady(true);
         }, 5000);
-      } catch (err: any) {
+      } catch (err) {
         console.error("MapView init error:", err);
         if (!cancelled) setError("Impossible de charger la carte. Rechargez la page.");
       }
@@ -136,6 +138,7 @@ export default function MapView() {
     if (!ready || !mapRef.current || !mlRef.current) return;
 
     const maplibregl = mlRef.current;
+    const map = mapRef.current;
 
     // Clear old markers
     markersRef.current.forEach((m) => {
@@ -174,7 +177,7 @@ export default function MapView() {
       try {
         const marker = new maplibregl.Marker({ element: el, anchor: "center" })
           .setLngLat([poi.lng, poi.lat])
-          .addTo(mapRef.current);
+          .addTo(map);
         markersRef.current.push(marker);
       } catch (err) {
         console.warn("Marker error:", poi.name, err);
@@ -193,6 +196,7 @@ export default function MapView() {
     if (!selected || !mapRef.current || !mlRef.current || !ready) return;
 
     const maplibregl = mlRef.current;
+    const map = mapRef.current;
     const cfg = TYPE_CONFIG[selected.type] || { color: "#6B7280", label: selected.type, emoji: "📍" };
 
     const durationStr = selected.durationMin
@@ -233,14 +237,14 @@ export default function MapView() {
           </div>
         </div>
       `)
-      .addTo(mapRef.current);
+      .addTo(map);
 
     popupRef.current = popup;
 
     // Fly to selected
-    mapRef.current.flyTo({
+    map.flyTo({
       center: [selected.lng, selected.lat],
-      zoom: Math.max(mapRef.current.getZoom(), 14),
+      zoom: Math.max(map.getZoom(), 14),
       duration: 800,
     });
   }, [selected, ready]);
@@ -307,7 +311,6 @@ export default function MapView() {
               </div>
               <div className="space-y-0.5">
                 {allTypes.map((type) => {
-                  const active = filters.length === 0 || filters.includes(type);
                   const cfg = TYPE_CONFIG[type] || { color: "#6B7280", label: type, emoji: "📍" };
                   const count = mockPois.filter((p) => p.type === type).length;
                   return (

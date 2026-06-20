@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, TrendingUp, Compass, Users, ArrowRight } from "lucide-react";
+import { Clock, TrendingUp, Compass, Users } from "lucide-react";
 import { mockHikes } from "@/lib/mock-data";
 
 const DIFFICULTY_CONFIG: Record<string, { label: string; color: string }> = {

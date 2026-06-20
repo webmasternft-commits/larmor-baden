@@ -21,11 +21,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- close mobile menu when the route changes
   useEffect(() => { setIsOpen(false); }, [pathname]);
 
   const navItems = [
     { name: t("places"), href: "/lieux" as const },
     { name: t("hikes"), href: "/randonnees" as const },
+    { name: t("tides"), href: "/marees" as const },
     { name: t("map"), href: "/carte" as const },
     { name: t("directory"), href: "/annuaire" as const },
     { name: t("shop"), href: "/boutique" as const },

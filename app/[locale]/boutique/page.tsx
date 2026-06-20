@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  ShoppingBag, Star, ExternalLink, ArrowRight,
+  ShoppingBag, ExternalLink,
   Heart, Gift, Shield, CheckCircle2, Truck,
 } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";

@@ -4,8 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { MapPin, Clock, Users, Search, SlidersHorizontal } from "lucide-react";
+import { MapPin, Clock, Users, Search } from "lucide-react";
 import { mockPois } from "@/lib/mock-data";
 
 const TYPE_LABELS: Record<string, string> = {

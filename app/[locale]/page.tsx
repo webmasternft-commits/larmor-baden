@@ -8,8 +8,6 @@ import { getAllProductsWithDetails, type PrintfulProductDetail } from "@/lib/pri
 import WeatherWidget from "@/components/WeatherWidget";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-const SITE_URL = "https://larmor-baden.com";
-
 export const revalidate = 300;
 
 interface Props {

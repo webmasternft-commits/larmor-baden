@@ -3,8 +3,8 @@
 import { useState, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Users, DollarSign, Car, Heart, Compass, Sparkles, MapPin, Clock, ArrowRight, RotateCcw, Bike, Footprints } from "lucide-react";
-import { mockPois, mockHikes, mockItineraries } from "@/lib/mock-data";
+import { Calendar, Users, DollarSign, Car, Heart, Sparkles, MapPin, ArrowRight, RotateCcw, Bike, Footprints } from "lucide-react";
+import { mockPois, mockHikes } from "@/lib/mock-data";
 import Link from "next/link";
 import Image from "next/image";
 

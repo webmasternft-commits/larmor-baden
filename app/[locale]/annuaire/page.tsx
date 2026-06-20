@@ -6,9 +6,9 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  Search, MapPin, Star, ExternalLink, BadgeCheck, Instagram,
+  Search, MapPin, Star, BadgeCheck, Instagram,
   Utensils, Ship, Bed, Bike, Camera, ShoppingBag, Filter,
-  ArrowRight, Sparkles, Phone, Globe, Clock, Users
+  ArrowRight, Sparkles, Phone, Clock
 } from "lucide-react";
 
 /* ────────────────────────────────────────────────────────────────

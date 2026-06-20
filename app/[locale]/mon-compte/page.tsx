@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { User, Heart, List, Settings, LogOut } from "lucide-react";
 
 export default function MonComptePage() {
@@ -61,7 +62,7 @@ export default function MonComptePage() {
                     Explorez les lieux et ajoutez-les à vos favoris
                   </p>
                   <Button className="mt-4" asChild>
-                    <a href="/lieux">Découvrir les lieux</a>
+                    <Link href="/lieux">Découvrir les lieux</Link>
                   </Button>
                 </div>
               </CardContent>
@@ -102,7 +103,7 @@ export default function MonComptePage() {
                 <div className="text-center py-8 text-gray-500">
                   <p>Aucun itinéraire sauvegardé</p>
                   <Button className="mt-4" asChild>
-                    <a href="/planifier">Créer un itinéraire</a>
+                    <Link href="/planifier">Créer un itinéraire</Link>
                   </Button>
                 </div>
               </CardContent>

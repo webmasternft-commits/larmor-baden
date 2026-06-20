@@ -57,8 +57,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
-  // Hydrate from localStorage
+  // Hydrate from localStorage (client-only; cannot run during SSR/render)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage after mount
     setItems(loadCart());
     setHydrated(true);
   }, []);
