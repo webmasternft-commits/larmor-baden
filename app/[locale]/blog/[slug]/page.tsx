@@ -16,6 +16,7 @@ const posts: Record<string, {
   imageUrl: string;
   content: string;
   faq?: { q: string; a: string }[];
+  keyFacts?: { label: string; value: string }[];
 }> = {
   /* ═══════════════════════════════════════════════════════════════════
      10 NOUVEAUX ARTICLES SEO
@@ -327,6 +328,12 @@ Sur la presqu'île de Rhuys, à 30 minutes en voiture, la grande plage du Fogeo 
 
 Les plages du Golfe du Morbihan sont surveillées en été. La qualité de l'eau est régulièrement contrôlée par l'ARS et généralement excellente à Larmor-Baden. Attention toutefois aux courants dans le goulet du Golfe — restez dans les zones de baignade balisées et ne nagez jamais seul.
     `,
+    keyFacts: [
+      { label: "Plage principale", value: "Berchis (familiale, eaux calmes)" },
+      { label: "Baignade", value: "Marée haute conseillée" },
+      { label: "Surveillance", value: "Juillet-août" },
+      { label: "Parking", value: "Gratuit à proximité" },
+    ],
     faq: [
       { q: "Quelle est la principale plage de Larmor-Baden ?", a: "La plage de Berchis : familiale, orientée sud-est, avec des eaux calmes et peu profondes idéales pour les enfants et une vue sur le Golfe." },
       { q: "Peut-on se baigner à marée basse à Larmor-Baden ?", a: "Préférez la marée haute pour la baignade. À marée basse, l'estran se découvre sur plusieurs dizaines de mètres : moins agréable pour nager, mais parfait pour la pêche à pied." },
@@ -537,6 +544,12 @@ Les grandes marées ont lieu environ tous les 14 jours, aux nouvelles et pleines
 - Ne vous aventurez pas sur les vasières éloignées du rivage
 - Les courants du Golfe sont parmi les plus forts d'Europe — respectez les zones de baignade
     `,
+    keyFacts: [
+      { label: "Accès Île Berder", value: "≈ 2 h avant et après la basse mer" },
+      { label: "Passage ouvert", value: "≈ 4 h par cycle de marée" },
+      { label: "Baignade", value: "Préférez la marée haute" },
+      { label: "Grandes marées", value: "Équinoxes de mars et septembre" },
+    ],
     faq: [
       { q: "Où consulter les horaires des marées à Larmor-Baden ?", a: "Les horaires de pleine mer et basse mer, les coefficients et les hauteurs d'eau pour Larmor-Baden sont consultables gratuitement en ligne, ainsi qu'à la capitainerie du port et à l'office de tourisme du Golfe du Morbihan." },
       { q: "Comment accéder à l'Île Berder à pied depuis Larmor-Baden ?", a: "L'Île Berder est reliée à Larmor-Baden par un passage submersible (gué) praticable uniquement autour de la basse mer, environ 2 heures avant et 2 heures après la marée basse." },
@@ -604,6 +617,13 @@ Une journée idéale à Larmor-Baden peut inclure :
 - **Après-midi** : tour de l'Île Berder à marée basse — vérifiez les horaires sur [maree.secretsmaree.com](https://maree.secretsmaree.com)
 - **Soir** : balade sur le sentier côtier GR34 et coucher de soleil sur le Golfe
     `,
+    keyFacts: [
+      { label: "Accès", value: "Bateau depuis le port de Larmor-Baden (~15 min)" },
+      { label: "Durée", value: "≈ 1h15 (traversée + visite guidée)" },
+      { label: "Saison", value: "Avril à septembre" },
+      { label: "Tarif", value: "≈ 15 € adulte / 8 € enfant" },
+      { label: "Réservation", value: "Recommandée (indispensable en été)" },
+    ],
     faq: [
       { q: "Comment se rendre sur l'île de Gavrinis ?", a: "Le Cairn de Gavrinis est accessible uniquement en bateau. Le seul point de départ est le port de Larmor-Baden (56870). La traversée dure environ 15 minutes." },
       { q: "Quels sont les horaires des bateaux pour Gavrinis depuis Larmor-Baden ?", a: "Les départs ont lieu d'avril à septembre, avec plusieurs rotations par jour depuis le port de Larmor-Baden. Les horaires précis varient selon la saison : réservez votre créneau à l'avance, surtout en juillet-août." },
@@ -678,6 +698,11 @@ Revenez à Larmor-Baden par la route côtière en passant par **Arradon**. Arrê
 - Téléchargez une carte des sentiers sur votre téléphone
 - Le **marché du jeudi** à Larmor-Baden est une étape gourmande à ne pas manquer si vous êtes là le bon jour
     `,
+    keyFacts: [
+      { label: "Durée", value: "2 jours" },
+      { label: "Incontournables", value: "Gavrinis, Île Berder, Île aux Moines, Vannes" },
+      { label: "Budget", value: "≈ 200 à 450 € / personne" },
+    ],
     faq: [
       { q: "Que faire en un week-end à Larmor-Baden ?", a: "Jour 1 : Cairn de Gavrinis le matin, déjeuner au port, sentier côtier vers Pen en Toul et coucher de soleil sur l'Île Berder. Jour 2 : Île aux Moines à vélo puis visite de Vannes." },
       { q: "Quel budget prévoir pour un week-end à Larmor-Baden ?", a: "Comptez environ 200 à 450 € par personne pour deux jours, hébergement, visites, traversées et restaurants compris." },
@@ -1060,6 +1085,22 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
         <Link href="/blog" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8 text-sm">
           <ArrowLeft className="h-4 w-4 mr-2" /> {locale === "en" ? "Back to blog" : "Retour au blog"}
         </Link>
+
+        {post.keyFacts && post.keyFacts.length > 0 && (
+          <div className="mb-8 rounded-2xl border border-sky-200 bg-sky-50/60 p-5">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-sky-700 mb-3">
+              {locale === "en" ? "In brief" : "En bref"}
+            </h2>
+            <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-1">
+              {post.keyFacts.map((f) => (
+                <div key={f.label} className="flex justify-between gap-3 border-b border-sky-100 py-1.5 text-sm">
+                  <dt className="text-stone-500">{f.label}</dt>
+                  <dd className="text-stone-800 font-medium text-right">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
 
         <article className="bg-white rounded-xl p-8 md:p-12 shadow-sm">
           <div
