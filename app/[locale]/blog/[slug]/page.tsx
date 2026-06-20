@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { setRequestLocale } from "next-intl/server";
+import { creditFor } from "@/lib/blog-image-credits";
 
 const posts: Record<string, {
   title: string;
@@ -956,6 +957,7 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
 
   const SITE_URL = "https://larmor-baden.com";
   const path = locale === "en" ? `/en/blog/${slug}` : `/blog/${slug}`;
+  const credit = creditFor(post.imageUrl);
 
   // Articles liés : priorité à la même catégorie, complété par les plus récents
   const related = Object.entries(posts)
@@ -1034,10 +1036,29 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
         </div>
       </div>
 
+      {/* Crédit photo (attribution Creative Commons) */}
+      {credit && (
+        <div className="container mx-auto px-4 max-w-3xl">
+          <p className="text-[11px] text-gray-400 pt-2 text-right">
+            {locale === "en" ? "Photo" : "Photo"} : {credit.author} —{" "}
+            {credit.licenseUrl ? (
+              <a href={credit.licenseUrl} target="_blank" rel="noopener noreferrer nofollow" className="hover:text-gray-600 underline underline-offset-2">
+                {credit.license}
+              </a>
+            ) : (
+              credit.license
+            )}{" "}
+            <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer nofollow" className="hover:text-gray-600 underline underline-offset-2">
+              (Wikimedia Commons)
+            </a>
+          </p>
+        </div>
+      )}
+
       {/* Content */}
       <div className="container mx-auto px-4 py-12 max-w-3xl">
         <Link href="/blog" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-8 text-sm">
-          <ArrowLeft className="h-4 w-4 mr-2" /> Retour au blog
+          <ArrowLeft className="h-4 w-4 mr-2" /> {locale === "en" ? "Back to blog" : "Retour au blog"}
         </Link>
 
         <article className="bg-white rounded-xl p-8 md:p-12 shadow-sm">

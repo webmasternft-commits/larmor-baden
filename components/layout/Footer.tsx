@@ -167,11 +167,14 @@ export default function Footer() {
             <h3 className="font-semibold text-white text-sm mb-4 tracking-wide uppercase">{t("practical")}</h3>
             <ul className="space-y-2.5 text-sm">
               {[
+                { href: "/infos-pratiques" as const, label: t("practicalInfoPage") },
+                { href: "/a-propos" as const, label: t("aboutUs") },
                 { href: "/planifier" as const, label: t("planTrip") },
                 { href: "/pros" as const, label: t("proSpace") },
                 { href: "/mentions-legales" as const, label: t("legalNotice") },
                 { href: "/confidentialite" as const, label: t("privacy") },
                 { href: "/cgv" as const, label: t("terms") },
+                { href: "/credits" as const, label: t("photoCredits") },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-stone-400 hover:text-white transition-colors">
