@@ -46,6 +46,8 @@ const T = {
     officialLink: "Site officiel de la commune",
     contactTitle: "Contact",
     contactText: "Une question, une correction, une suggestion ? Écrivez-nous :",
+    affiliate:
+      "Transparence : certains liens vers des partenaires (hébergements, activités) sont des liens affiliés. Si vous réservez via ces liens, nous pouvons percevoir une commission, sans aucun surcoût pour vous. Cela nous aide à maintenir le site gratuit.",
   },
   en: {
     h1: "About Larmor-Baden.com",
@@ -69,6 +71,8 @@ const T = {
     officialLink: "Official municipal website",
     contactTitle: "Contact",
     contactText: "A question, a correction, a suggestion? Write to us:",
+    affiliate:
+      "Transparency: some links to partners (accommodation, activities) are affiliate links. If you book through them, we may earn a commission at no extra cost to you. It helps us keep the site free.",
   },
 };
 
@@ -142,6 +146,7 @@ export default async function AProposPage({ params }: { params: Promise<{ locale
               {locale === "en" ? "Photo credits" : "Crédits photos"}
             </Link>
           </div>
+          <p className="text-xs text-stone-400 mt-4 leading-relaxed border-t border-stone-100 pt-4">{t.affiliate}</p>
         </section>
       </div>
     </div>

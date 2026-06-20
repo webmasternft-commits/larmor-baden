@@ -6,6 +6,8 @@ import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { setRequestLocale } from "next-intl/server";
 import { creditFor } from "@/lib/blog-image-credits";
+import { affiliateKindForCategory } from "@/lib/affiliates";
+import AffiliatePartner from "@/components/AffiliatePartner";
 
 const posts: Record<string, {
   title: string;
@@ -983,6 +985,7 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
   const SITE_URL = "https://larmor-baden.com";
   const path = locale === "en" ? `/en/blog/${slug}` : `/blog/${slug}`;
   const credit = creditFor(post.imageUrl);
+  const affiliateKind = affiliateKindForCategory(post.category);
 
   // Articles liés : priorité à la même catégorie, complété par les plus récents
   const related = Object.entries(posts)
@@ -1126,6 +1129,9 @@ export default async function BlogPost({ params }: { params: Promise<{ locale: s
           </div>
           <span className="text-sky-600 text-xl flex-shrink-0">→</span>
         </Link>
+
+        {/* Encart partenaire (affiliation) — visible seulement si un ID est configuré */}
+        {affiliateKind && <AffiliatePartner kind={affiliateKind} locale={locale} query={affiliateKind === "accommodation" ? "Larmor-Baden" : "Golfe du Morbihan"} />}
 
         {/* FAQ */}
         {post.faq && post.faq.length > 0 && (

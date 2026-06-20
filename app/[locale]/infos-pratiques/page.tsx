@@ -3,6 +3,7 @@ import Link from "next/link";
 import { setRequestLocale } from "next-intl/server";
 import { Car, ShoppingBasket, Bus, Building2, Waves, Phone } from "lucide-react";
 import { routing } from "@/i18n/routing";
+import AffiliatePartner from "@/components/AffiliatePartner";
 
 const SITE_URL = "https://larmor-baden.com";
 
@@ -154,6 +155,9 @@ export default async function InfosPratiquesPage({ params }: { params: Promise<{
               {t.tidesLink} →
             </Link>
           </section>
+
+          <AffiliatePartner kind="accommodation" locale={locale} query="Larmor-Baden" />
+          <AffiliatePartner kind="activities" locale={locale} query="Golfe du Morbihan" />
 
           <section className="bg-white rounded-2xl border border-stone-200 p-5 shadow-sm">
             <h2 className="flex items-center gap-2 text-lg font-bold text-stone-900 mb-3">

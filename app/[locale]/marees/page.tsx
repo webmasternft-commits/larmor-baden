@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Waves, Anchor, Footprints, Fish, AlertTriangle } from "lucide-react";
 import { getTides } from "@/lib/tides";
 import TideWidget from "@/components/TideWidget";
+import AffiliatePartner from "@/components/AffiliatePartner";
 import { routing } from "@/i18n/routing";
 
 const SITE_URL = "https://larmor-baden.com";
@@ -217,6 +218,8 @@ export default async function MareesPage({ params }: { params: Promise<{ locale:
             ))}
           </div>
         </section>
+
+        <AffiliatePartner kind="activities" locale={loc} query="Golfe du Morbihan" />
 
         {/* Liens internes */}
         <section>
