@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useLocale } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,13 +13,47 @@ const TYPE_LABELS: Record<string, string> = {
   randonnee: "Randonnée", marche: "Marché", panorama: "Panorama", nature: "Nature",
 };
 
+const TYPE_LABELS_EN: Record<string, string> = {
+  port: "Harbour", ile: "Island", patrimoine: "Heritage", plage: "Beach",
+  randonnee: "Hike", marche: "Market", panorama: "Viewpoint", nature: "Nature",
+};
+
 const TYPE_COLORS: Record<string, string> = {
   port: "bg-sky-50 text-sky-700", ile: "bg-emerald-50 text-emerald-700",
   patrimoine: "bg-amber-50 text-amber-700", plage: "bg-cyan-50 text-cyan-700",
   randonnee: "bg-violet-50 text-violet-700", marche: "bg-rose-50 text-rose-700",
 };
 
+const STR = {
+  fr: {
+    explore: "Explorer",
+    title: "Lieux d'intérêt",
+    subtitle: (n: number) => `${n} sites incontournables à Larmor-Baden et dans le Golfe du Morbihan`,
+    searchPlaceholder: "Rechercher un lieu...",
+    all: "Tous",
+    none: "Aucun lieu trouvé",
+    reset: "Réinitialiser",
+    family: "Famille",
+    free: "Gratuit",
+  },
+  en: {
+    explore: "Explore",
+    title: "Places of interest",
+    subtitle: (n: number) => `${n} must-see sites in Larmor-Baden and the Gulf of Morbihan`,
+    searchPlaceholder: "Search a place...",
+    all: "All",
+    none: "No place found",
+    reset: "Reset",
+    family: "Family",
+    free: "Free",
+  },
+};
+
 export default function LieuxPage() {
+  const locale = useLocale();
+  const t = STR[locale === "en" ? "en" : "fr"];
+  const typeLabels = locale === "en" ? TYPE_LABELS_EN : TYPE_LABELS;
+
   const [activeType, setActiveType] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
@@ -30,7 +65,7 @@ export default function LieuxPage() {
     if (query.trim()) {
       const q = query.toLowerCase();
       pois = pois.filter((p) =>
-        p.name.toLowerCase().includes(q) || p.summary.toLowerCase().includes(q) || p.tags.some((t) => t.includes(q))
+        p.name.toLowerCase().includes(q) || p.summary.toLowerCase().includes(q) || p.tags.some((tag) => tag.includes(q))
       );
     }
     return pois;
@@ -42,11 +77,9 @@ export default function LieuxPage() {
       <section className="bg-white border-b border-stone-200">
         <div className="container mx-auto px-4 lg:px-6 py-12 md:py-16">
           <div className="max-w-2xl">
-            <p className="text-sm font-medium text-[var(--ocean-light)] uppercase tracking-wider mb-2">Explorer</p>
-            <h1 className="text-4xl md:text-5xl font-bold text-stone-900 tracking-tight mb-3">Lieux d&apos;intérêt</h1>
-            <p className="text-lg text-stone-500">
-              {mockPois.length} sites incontournables à Larmor-Baden et dans le Golfe du Morbihan
-            </p>
+            <p className="text-sm font-medium text-[var(--ocean-light)] uppercase tracking-wider mb-2">{t.explore}</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-stone-900 tracking-tight mb-3">{t.title}</h1>
+            <p className="text-lg text-stone-500">{t.subtitle(mockPois.length)}</p>
           </div>
 
           {/* Search + filters */}
@@ -57,7 +90,7 @@ export default function LieuxPage() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher un lieu..."
+                placeholder={t.searchPlaceholder}
                 className="w-full pl-10 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--ocean-light)] focus:border-transparent transition"
               />
             </div>
@@ -71,7 +104,7 @@ export default function LieuxPage() {
                 !activeType ? "bg-[var(--ocean)] text-white shadow-sm" : "bg-stone-100 text-stone-600 hover:bg-stone-200"
               }`}
             >
-              Tous ({mockPois.length})
+              {t.all} ({mockPois.length})
             </button>
             {types.map((type) => (
               <button
@@ -81,7 +114,7 @@ export default function LieuxPage() {
                   activeType === type ? "bg-[var(--ocean)] text-white shadow-sm" : "bg-stone-100 text-stone-600 hover:bg-stone-200"
                 }`}
               >
-                {TYPE_LABELS[type] || type} ({mockPois.filter((p) => p.type === type).length})
+                {typeLabels[type] || type} ({mockPois.filter((p) => p.type === type).length})
               </button>
             ))}
           </div>
@@ -93,9 +126,9 @@ export default function LieuxPage() {
         {filtered.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-2xl border border-stone-200">
             <MapPin className="w-10 h-10 text-stone-300 mx-auto mb-3" />
-            <p className="text-stone-500 mb-2">Aucun lieu trouvé</p>
+            <p className="text-stone-500 mb-2">{t.none}</p>
             <button onClick={() => { setActiveType(null); setQuery(""); }} className="text-sm text-[var(--ocean)] hover:underline">
-              Réinitialiser
+              {t.reset}
             </button>
           </div>
         ) : (
@@ -104,14 +137,14 @@ export default function LieuxPage() {
               <Link key={poi.id} href={`/lieux/${poi.slug}`}>
                 <Card className="overflow-hidden h-full border-stone-200/60 hover:shadow-[var(--shadow-lg)] transition-all duration-300 hover:-translate-y-0.5 group bg-white">
                   <div className="relative h-48 overflow-hidden">
-                    <Image src={poi.imageUrl} alt={`${poi.name} — ${TYPE_LABELS[poi.type] || poi.type} à visiter à Larmor-Baden, Morbihan`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" />
+                    <Image src={poi.imageUrl} alt={`${poi.name} — ${typeLabels[poi.type] || poi.type}, Larmor-Baden, Morbihan`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                     <span className={`absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-medium bg-white/90 backdrop-blur-sm ${TYPE_COLORS[poi.type] || "text-stone-700"}`}>
-                      {TYPE_LABELS[poi.type] || poi.type}
+                      {typeLabels[poi.type] || poi.type}
                     </span>
                     {poi.kidFriendly && (
                       <span className="absolute top-3 right-3 px-2 py-1 bg-emerald-500/90 backdrop-blur-sm text-white rounded-lg text-xs font-medium flex items-center gap-1">
-                        <Users className="h-3 w-3" /> Famille
+                        <Users className="h-3 w-3" /> {t.family}
                       </span>
                     )}
                   </div>
@@ -123,7 +156,7 @@ export default function LieuxPage() {
                         <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {Math.floor(poi.durationMin / 60)}h{poi.durationMin % 60 > 0 ? `${poi.durationMin % 60}` : ""}</span>
                       )}
                       <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> Larmor-Baden</span>
-                      {poi.priceLevel === 0 && <span className="text-emerald-600 font-medium">Gratuit</span>}
+                      {poi.priceLevel === 0 && <span className="text-emerald-600 font-medium">{t.free}</span>}
                     </div>
                   </CardContent>
                 </Card>
