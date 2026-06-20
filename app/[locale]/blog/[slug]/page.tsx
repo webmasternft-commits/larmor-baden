@@ -25,7 +25,7 @@ const posts: Record<string, {
     category: "Maritime",
     date: "2026-02-09",
     readTime: "8 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Port_de_Larmor_Baden_depuis_Berder.jpg/1280px-Port_de_Larmor_Baden_depuis_Berder.jpg",
+    imageUrl: "/images/blog/port-de-larmor-baden-depuis-berder.jpg",
     content: `
 ## Le port de Larmor-Baden : un lieu incontournable
 
@@ -82,7 +82,7 @@ Le port se trouve au centre du bourg de Larmor-Baden (56870), à 15 km de Vannes
     category: "Pratique",
     date: "2026-02-08",
     readTime: "7 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Le_golfe_du_morbihan_-_panoramio_%285%29.jpg/1280px-Le_golfe_du_morbihan_-_panoramio_%285%29.jpg",
+    imageUrl: "/images/blog/le-golfe-du-morbihan-panoramio-5.jpg",
     content: `
 ## Le microclimat du Golfe du Morbihan
 
@@ -144,7 +144,7 @@ Quelle que soit la saison, emportez toujours :
     category: "Gastronomie",
     date: "2026-02-07",
     readTime: "9 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Morbihan_Larmor-Baden_Port_-_panoramio.jpg/1280px-Morbihan_Larmor-Baden_Port_-_panoramio.jpg",
+    imageUrl: "/images/blog/morbihan-larmor-baden-port-panoramio.jpg",
     content: `
 ## Manger à Larmor-Baden : un plaisir breton
 
@@ -204,7 +204,7 @@ En juillet et août, Larmor-Baden organise des **marchés nocturnes festifs** av
     category: "Hébergement",
     date: "2026-02-06",
     readTime: "7 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/089_Larmor-Baden_Paludo.jpg/1280px-089_Larmor-Baden_Paludo.jpg",
+    imageUrl: "/images/blog/089-larmor-baden-paludo.jpg",
     content: `
 ## Camper à Larmor-Baden : la nature au bord du Golfe
 
@@ -274,7 +274,7 @@ La saison de camping s'étend d'**avril à septembre**. La meilleure période re
     category: "Plages",
     date: "2026-02-05",
     readTime: "8 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Plage_de_larmor_baden_fevrier_2013_-_panoramio.jpg/1280px-Plage_de_larmor_baden_fevrier_2013_-_panoramio.jpg",
+    imageUrl: "/images/blog/plage-de-larmor-baden-fevrier-2013-panoramio.jpg",
     content: `
 ## Les plages de Larmor-Baden et ses environs
 
@@ -338,7 +338,7 @@ Les plages du Golfe du Morbihan sont surveillées en été. La qualité de l'eau
     category: "Hébergement",
     date: "2026-02-04",
     readTime: "6 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Le_golfe_du_morbihan_-_panoramio_%284%29.jpg/1280px-Le_golfe_du_morbihan_-_panoramio_%284%29.jpg",
+    imageUrl: "/images/blog/le-golfe-du-morbihan-panoramio-4.jpg",
     content: `
 ## VVF Villages Larmor-Baden : des vacances en famille
 
@@ -409,7 +409,7 @@ Les tarifs du VVF de Larmor-Baden varient selon la saison, la durée du séjour 
     category: "Hébergement",
     date: "2026-02-03",
     readTime: "8 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Larmor-Baden_-_Anse_Locmiquel_%281%29.jpg/1280px-Larmor-Baden_-_Anse_Locmiquel_%281%29.jpg",
+    imageUrl: "/images/blog/larmor-baden-anse-locmiquel-1.jpg",
     content: `
 ## Où dormir à Larmor-Baden ?
 
@@ -470,7 +470,7 @@ Pour les budgets plus serrés ou les amoureux de la nature, le camping Ker Eden 
     category: "Pratique",
     date: "2026-02-02",
     readTime: "9 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Berder-Passage_mar%C3%A9e_basse.jpg/1280px-Berder-Passage_mar%C3%A9e_basse.jpg",
+    imageUrl: "/images/blog/berder-passage-maree-basse.jpg",
     content: `
 ## Pourquoi les marées sont essentielles à Larmor-Baden
 
@@ -549,7 +549,7 @@ Les grandes marées ont lieu environ tous les 14 jours, aux nouvelles et pleines
     category: "Excursion",
     date: "2026-01-30",
     readTime: "8 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Cromlech_d%27Er_Lannic_et_cairn_de_Gavrinis_par_drone_-_vue_1.jpg/1280px-Cromlech_d%27Er_Lannic_et_cairn_de_Gavrinis_par_drone_-_vue_1.jpg",
+    imageUrl: "/images/blog/cromlech-d-er-lannic-et-cairn-de-gavrinis-par-drone-vue-1.jpg",
     content: `
 ## Gavrinis : l'excursion incontournable depuis Larmor-Baden
 
@@ -617,7 +617,7 @@ Une journée idéale à Larmor-Baden peut inclure :
     category: "Itinéraire",
     date: "2026-01-28",
     readTime: "10 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Larmor_Baden_-_panoramio.jpg/1280px-Larmor_Baden_-_panoramio.jpg",
+    imageUrl: "/images/blog/larmor-baden-panoramio.jpg",
     content: `
 ## Un week-end à Larmor-Baden : l'itinéraire idéal
 
@@ -691,7 +691,7 @@ Revenez à Larmor-Baden par la route côtière en passant par **Arradon**. Arrê
     category: "Guide",
     date: "2026-02-01",
     readTime: "12 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Port_de_Larmor-Baden.jpg/1280px-Port_de_Larmor-Baden.jpg",
+    imageUrl: "/images/blog/port-de-larmor-baden.jpg",
     content: `
 ## Où se situe Larmor-Baden ?
 
@@ -732,7 +732,7 @@ Le Golfe du Morbihan bénéficie d'un microclimat doux. La meilleure période s'
     category: "Randonnées",
     date: "2026-01-25",
     readTime: "8 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Le_golfe_du_morbihan_vu_du_port_de_larmor_baden_-_panoramio.jpg/1280px-Le_golfe_du_morbihan_vu_du_port_de_larmor_baden_-_panoramio.jpg",
+    imageUrl: "/images/blog/le-golfe-du-morbihan-vu-du-port-de-larmor-baden-panoramio.jpg",
     content: `
 ## 1. Le Tour de l'Île aux Moines (12,5 km)
 
@@ -782,7 +782,7 @@ La portion la plus spectaculaire du sentier des douaniers dans le Golfe. Points 
     category: "Patrimoine",
     date: "2026-01-18",
     readTime: "10 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Cairn_Gavrinis_entrance.jpg/1280px-Cairn_Gavrinis_entrance.jpg",
+    imageUrl: "/images/blog/cairn-gavrinis-entrance.jpg",
     content: `
 ## Un monument exceptionnel
 
@@ -812,7 +812,7 @@ La dalle de couverture du cairn de Gavrinis est un fragment de la "Table des Mar
     category: "Îles",
     date: "2026-01-10",
     readTime: "7 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Plage_du_Gored-%C3%8Ele-aux-Moines_%281%29.jpg/1280px-Plage_du_Gored-%C3%8Ele-aux-Moines_%281%29.jpg",
+    imageUrl: "/images/blog/plage-du-gored-ile-aux-moines-1.jpg",
     content: `
 ## La traversée
 
@@ -852,7 +852,7 @@ Remontez tranquillement vers l'embarcadère en passant par les ruelles fleuries 
     category: "Gastronomie",
     date: "2026-01-05",
     readTime: "6 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Le_golfe_du_morbihan_vu_du_port_de_larmor_baden_-_panoramio.jpg/1280px-Le_golfe_du_morbihan_vu_du_port_de_larmor_baden_-_panoramio.jpg",
+    imageUrl: "/images/blog/le-golfe-du-morbihan-vu-du-port-de-larmor-baden-panoramio.jpg",
     content: `
 ## Les huîtres du Golfe du Morbihan
 
@@ -888,7 +888,7 @@ Le cidre breton, doux ou brut, accompagne parfaitement les galettes. Pour les pl
     category: "Infos pratiques",
     date: "2025-12-20",
     readTime: "9 min",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/%C3%8Ele_de_Berder-V%C3%A9g%C3%A9tation.jpg/1280px-%C3%8Ele_de_Berder-V%C3%A9g%C3%A9tation.jpg",
+    imageUrl: "/images/blog/ile-de-berder-vegetation.jpg",
     content: `
 ## Le Golfe du Morbihan et ses marées
 
